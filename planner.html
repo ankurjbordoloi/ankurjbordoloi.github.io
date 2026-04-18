@@ -7,246 +7,81 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #0f0f0f;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      color: #f0ead6;
-      min-height: 100vh;
-    }
-    .q-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.25rem 2.5rem;
-      border-bottom: 0.5px solid rgba(212,175,55,0.2);
-    }
-    .q-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
-      font-weight: 600;
-      color: #d4af37;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-    }
+    body { background: #0f0f0f; font-family: 'Jost', sans-serif; font-weight: 300; color: #f0ead6; min-height: 100vh; }
+    .q-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2.5rem; border-bottom: 0.5px solid rgba(212,175,55,0.2); }
+    .q-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; }
     .q-progress-wrap { flex: 1; margin: 0 2rem; }
-    .q-progress-bar {
-      height: 1px;
-      background: rgba(212,175,55,0.15);
-      border-radius: 1px;
-      overflow: hidden;
-    }
-    .q-progress-fill {
-      height: 100%;
-      background: #d4af37;
-      transition: width 0.4s ease;
-    }
-    .q-progress-label {
-      font-size: 11px;
-      color: #4a4538;
-      letter-spacing: 1px;
-      margin-top: 4px;
-      text-align: right;
-    }
-    .q-main {
-      min-height: calc(100vh - 65px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 2rem;
-    }
+    .q-progress-bar { height: 1px; background: rgba(212,175,55,0.15); border-radius: 1px; overflow: hidden; }
+    .q-progress-fill { height: 100%; background: #d4af37; transition: width 0.4s ease; }
+    .q-progress-label { font-size: 11px; color: #4a4538; letter-spacing: 1px; margin-top: 4px; text-align: right; }
+    .q-main { min-height: calc(100vh - 65px); display: flex; align-items: center; justify-content: center; padding: 3rem 2rem; }
     .q-card { width: 100%; max-width: 560px; }
-    .q-step-tag {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #d4af37;
-      margin-bottom: 1.25rem;
-    }
-    .q-question {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 36px;
-      font-weight: 300;
-      color: #f5edd8;
-      line-height: 1.2;
-      margin-bottom: 2rem;
-    }
-    .q-multi-hint {
-      font-size: 11px;
-      color: #4a4538;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
+    .q-step-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #d4af37; margin-bottom: 1.25rem; }
+    .q-question { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: #f5edd8; line-height: 1.2; margin-bottom: 2rem; }
+    .q-multi-hint { font-size: 11px; color: #4a4538; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1rem; }
     .q-options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
-    .q-option {
-      background: transparent;
-      border: 0.5px solid rgba(212,175,55,0.25);
-      color: #c8bfa0;
-      padding: 1rem 1.25rem;
-      font-family: 'Jost', sans-serif;
-      font-size: 14px;
-      font-weight: 300;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      border-radius: 2px;
-      text-align: left;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+    .q-option { background: transparent; border: 0.5px solid rgba(212,175,55,0.25); color: #c8bfa0; padding: 1rem 1.25rem; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300; letter-spacing: 0.5px; cursor: pointer; border-radius: 2px; text-align: left; transition: all 0.2s; display: flex; align-items: center; gap: 0.75rem; }
     .q-option:hover { border-color: #d4af37; color: #f5edd8; background: rgba(212,175,55,0.05); }
     .q-option.selected { border-color: #d4af37; color: #f5edd8; background: rgba(212,175,55,0.08); }
-    .q-option-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      border: 0.5px solid rgba(212,175,55,0.4);
-      flex-shrink: 0;
-      transition: background 0.2s;
-    }
+    .q-option-dot { width: 6px; height: 6px; border-radius: 50%; border: 0.5px solid rgba(212,175,55,0.4); flex-shrink: 0; transition: background 0.2s; }
     .q-option.selected .q-option-dot { background: #d4af37; border-color: #d4af37; }
-    .q-input {
-      background: transparent;
-      border: 0.5px solid rgba(212,175,55,0.25);
-      color: #f5edd8;
-      padding: 1rem 1.25rem;
-      font-family: 'Jost', sans-serif;
-      font-size: 14px;
-      font-weight: 300;
-      width: 100%;
-      border-radius: 2px;
-      margin-bottom: 1.5rem;
-      outline: none;
-    }
+    .q-input { background: transparent; border: 0.5px solid rgba(212,175,55,0.25); color: #f5edd8; padding: 1rem 1.25rem; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300; width: 100%; border-radius: 2px; margin-bottom: 1.5rem; outline: none; }
     .q-input:focus { border-color: #d4af37; }
     .q-input::placeholder { color: #4a4538; }
     .q-actions { display: flex; justify-content: space-between; align-items: center; }
-    .q-btn-next {
-      background: #d4af37;
-      color: #0f0f0f;
-      border: none;
-      padding: 12px 32px;
-      font-family: 'Jost', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 2px;
-      transition: background 0.2s;
-    }
+    .q-btn-next { background: #d4af37; color: #0f0f0f; border: none; padding: 12px 32px; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.2s; }
     .q-btn-next:hover { background: #c9a227; }
     .q-btn-next:disabled { background: rgba(212,175,55,0.2); color: #4a4538; cursor: not-allowed; }
-    .q-btn-back {
-      background: transparent;
-      border: none;
-      color: #4a4538;
-      font-family: 'Jost', sans-serif;
-      font-size: 13px;
-      letter-spacing: 1px;
-      cursor: pointer;
-      padding: 12px 0;
-      transition: color 0.2s;
-    }
+    .q-btn-back { background: transparent; border: none; color: #4a4538; font-family: 'Jost', sans-serif; font-size: 13px; letter-spacing: 1px; cursor: pointer; padding: 12px 0; transition: color 0.2s; }
     .q-btn-back:hover { color: #d4af37; }
-    .q-result { width: 100%; max-width: 680px; }
-    .q-result-tag {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #d4af37;
-      margin-bottom: 1rem;
-    }
-    .q-result h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 40px;
-      font-weight: 300;
-      color: #f5edd8;
-      margin-bottom: 0.5rem;
-    }
-    .q-result-subtitle { font-size: 13px; color: #6e6757; margin-bottom: 2rem; letter-spacing: 0.5px; }
-    .q-itinerary { border: 0.5px solid rgba(212,175,55,0.2); border-radius: 2px; overflow: hidden; margin-bottom: 1.5rem; }
-    .q-itinerary-header {
-      background: rgba(212,175,55,0.08);
-      padding: 1rem 1.5rem;
-      border-bottom: 0.5px solid rgba(212,175,55,0.15);
-      font-size: 12px;
-      color: #d4af37;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .q-itinerary-body {
-      padding: 1.5rem;
-      font-size: 14px;
-      color: #a89f87;
-      line-height: 1.9;
-      white-space: pre-wrap;
-      min-height: 80px;
-    }
-    .q-loading { display: flex; align-items: center; gap: 0.75rem; color: #4a4538; font-size: 13px; letter-spacing: 1px; }
-    .q-dot-anim { display: flex; gap: 4px; }
-    .q-dot-anim span {
-      width: 4px; height: 4px;
-      background: #d4af37;
-      border-radius: 50%;
-      animation: dotpulse 1.2s ease-in-out infinite;
-    }
-    .q-dot-anim span:nth-child(2) { animation-delay: 0.2s; }
-    .q-dot-anim span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes dotpulse {
-      0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
-      40% { opacity: 1; transform: scale(1); }
-    }
-    .q-email-box { border: 0.5px solid rgba(212,175,55,0.2); border-radius: 2px; padding: 1.25rem 1.5rem; }
-    .q-email-label { font-size: 12px; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; }
-    .q-email-hint { font-size: 13px; color: #6e6757; margin-bottom: 0.75rem; }
-    .q-email-row { display: flex; gap: 0.75rem; }
-    .q-email-input {
-      flex: 1;
-      background: transparent;
-      border: 0.5px solid rgba(212,175,55,0.25);
-      color: #f5edd8;
-      padding: 12px 1rem;
-      font-family: 'Jost', sans-serif;
-      font-size: 13px;
-      border-radius: 2px;
-      outline: none;
-    }
-    .q-email-input:focus { border-color: #d4af37; }
-    .q-email-input::placeholder { color: #4a4538; }
-    .q-btn-email {
-      background: transparent;
-      color: #d4af37;
-      border: 0.5px solid #d4af37;
-      padding: 12px 24px;
-      font-family: 'Jost', sans-serif;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 2px;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-    .q-btn-email:hover { background: rgba(212,175,55,0.08); }
-    .q-email-sent { font-size: 13px; color: #d4af37; letter-spacing: 1px; margin-top: 0.75rem; display: none; }
-    .q-restart {
-      font-size: 12px;
-      color: #4a4538;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: none;
-      background: none;
-      font-family: 'Jost', sans-serif;
-      margin-top: 1.5rem;
-      display: block;
-      transition: color 0.2s;
-    }
-    .q-restart:hover { color: #d4af37; }
+
+    .r-wrap { width: 100%; max-width: 620px; }
+    .r-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #d4af37; margin-bottom: 1rem; }
+    .r-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; color: #f5edd8; margin-bottom: 0.4rem; line-height: 1.15; }
+    .r-subtitle { font-size: 13px; color: #6e6757; margin-bottom: 2rem; letter-spacing: 0.5px; }
+    .r-glimpse { border: 0.5px solid rgba(212,175,55,0.2); border-radius: 2px; margin-bottom: 1.5rem; overflow: hidden; }
+    .r-glimpse-header { background: rgba(212,175,55,0.08); padding: 0.875rem 1.5rem; border-bottom: 0.5px solid rgba(212,175,55,0.15); display: flex; justify-content: space-between; align-items: center; }
+    .r-glimpse-label { font-size: 11px; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; }
+    .r-glimpse-badge { font-size: 10px; color: #4a4538; letter-spacing: 1px; text-transform: uppercase; background: rgba(212,175,55,0.06); padding: 3px 10px; border: 0.5px solid rgba(212,175,55,0.15); border-radius: 2px; }
+    .r-glimpse-body { padding: 1.5rem 1.5rem 0; }
+    .r-glimpse-text { font-size: 14px; color: #a89f87; line-height: 1.9; white-space: pre-wrap; }
+    .r-glimpse-fade { height: 80px; background: linear-gradient(transparent, #0f0f0f); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 1rem; }
+    .r-glimpse-more { font-size: 12px; color: #4a4538; letter-spacing: 1.5px; text-transform: uppercase; }
+    .r-email-box { border: 0.5px solid rgba(212,175,55,0.25); border-radius: 2px; padding: 1.5rem; margin-bottom: 1rem; }
+    .r-email-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: #f5edd8; margin-bottom: 0.4rem; }
+    .r-email-hint { font-size: 13px; color: #6e6757; margin-bottom: 1rem; line-height: 1.6; }
+    .r-row { display: flex; gap: 0.75rem; }
+    .r-input { flex: 1; background: transparent; border: 0.5px solid rgba(212,175,55,0.25); color: #f5edd8; padding: 11px 1rem; font-family: 'Jost', sans-serif; font-size: 13px; border-radius: 2px; outline: none; min-width: 0; width: 100%; }
+    .r-input:focus { border-color: #d4af37; }
+    .r-input::placeholder { color: #4a4538; }
+    .r-btn-gold { background: #d4af37; color: #0f0f0f; border: none; padding: 11px 24px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; border-radius: 2px; white-space: nowrap; transition: background 0.2s; }
+    .r-btn-gold:hover { background: #c9a227; }
+    .r-sent { font-size: 12px; color: #d4af37; letter-spacing: 1px; margin-top: 0.75rem; display: none; }
+    .r-divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; }
+    .r-divider-line { flex: 1; height: 0.5px; background: rgba(212,175,55,0.12); }
+    .r-divider-text { font-size: 11px; color: #4a4538; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
+    .r-premium { border: 0.5px solid rgba(212,175,55,0.4); border-radius: 2px; padding: 1.5rem; background: rgba(212,175,55,0.03); }
+    .r-premium-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .r-premium-badge { font-size: 10px; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; background: rgba(212,175,55,0.1); border: 0.5px solid rgba(212,175,55,0.3); padding: 4px 12px; border-radius: 2px; flex-shrink: 0; margin-left: 1rem; }
+    .r-premium-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: #f5edd8; margin-bottom: 0.4rem; }
+    .r-premium-sub { font-size: 13px; color: #6e6757; }
+    .r-perks { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .r-perk { display: flex; align-items: center; gap: 0.6rem; font-size: 13px; color: #a89f87; }
+    .r-perk-dot { width: 4px; height: 4px; border-radius: 50%; background: #d4af37; flex-shrink: 0; }
+    .r-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .r-form-full { margin-bottom: 0.75rem; }
+    .r-label { font-size: 11px; color: #4a4538; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.4rem; display: block; }
+    .r-select { width: 100%; background: #0f0f0f; border: 0.5px solid rgba(212,175,55,0.25); color: #c8bfa0; padding: 11px 1rem; font-family: 'Jost', sans-serif; font-size: 13px; border-radius: 2px; outline: none; appearance: none; cursor: pointer; }
+    .r-select:focus { border-color: #d4af37; }
+    .r-book-sent { font-size: 12px; color: #d4af37; letter-spacing: 1px; margin-top: 0.75rem; display: none; line-height: 1.6; }
+    .r-restart { font-size: 12px; color: #4a4538; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; border: none; background: none; font-family: 'Jost', sans-serif; margin-top: 1.5rem; display: block; transition: color 0.2s; }
+    .r-restart:hover { color: #d4af37; }
+    .r-loading { display: flex; align-items: center; gap: 0.75rem; color: #4a4538; font-size: 13px; letter-spacing: 1px; }
+    .r-dot-anim { display: flex; gap: 4px; }
+    .r-dot-anim span { width: 4px; height: 4px; background: #d4af37; border-radius: 50%; animation: dp 1.2s ease-in-out infinite; }
+    .r-dot-anim span:nth-child(2) { animation-delay: 0.2s; }
+    .r-dot-anim span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dp { 0%,80%,100%{opacity:.2;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
   </style>
 </head>
 <body>
@@ -265,225 +100,6 @@
 
   <script>
     const questions = [
-      {
-        id: 'traveller_type',
-        tag: 'About you',
-        question: 'Who are you travelling with?',
-        type: 'single',
-        options: ['Solo', 'With a partner', 'Family with kids', 'Group of friends', 'Work / Group travel']
-      },
-      {
-        id: 'destination',
-        tag: 'Destination',
-        question: 'Do you have a destination in mind?',
-        type: 'single',
-        options: ['Yes, I know where I want to go', 'No, surprise me with a recommendation']
-      },
-      {
-        id: 'destination_name',
-        tag: 'Destination',
-        question: 'Where would you like to go?',
-        type: 'text',
-        placeholder: 'e.g. Kyoto, Patagonia, Morocco...',
-        condition: (ans) => ans.destination === 'Yes, I know where I want to go'
-      },
-      {
-        id: 'duration',
-        tag: 'Your trip',
-        question: 'How long is your trip?',
-        type: 'single',
-        options: ['A weekend (2–3 days)', 'About a week', 'Two weeks', 'A month or more']
-      },
-      {
-        id: 'pace',
-        tag: 'Your style',
-        question: 'How do you like to travel?',
-        type: 'single',
-        options: ['Laid-back — slow down and soak it in', 'Balanced — a bit of everything', 'Action-packed — see as much as possible']
-      },
-      {
-        id: 'vibe',
-        tag: 'Your style',
-        question: 'What kind of experiences excite you?',
-        type: 'multi',
-        options: ['Adventure & outdoors', 'Culture & history', 'Food & nightlife', 'Wellness & relaxation', 'Hidden gems & offbeat', 'Mainstream highlights']
-      },
-      {
-        id: 'budget',
-        tag: 'Budget',
-        question: 'What is your travel budget like?',
-        type: 'single',
-        options: ['Budget — keep costs low', 'Mid-range — comfort without splurging', 'Premium — I want the best experience']
-      }
-    ];
-
-    let current = 0;
-    let answers = {};
-    let visibleQuestions = [];
-
-    function getVisible() {
-      return questions.filter(q => !q.condition || q.condition(answers));
-    }
-
-    function render() {
-      visibleQuestions = getVisible();
-      const total = visibleQuestions.length;
-      const q = visibleQuestions[current];
-      const pct = Math.round((current / total) * 100);
-      document.getElementById('progressFill').style.width = pct + '%';
-      document.getElementById('progressLabel').textContent = 'Step ' + (current + 1) + ' of ' + total;
-
-      const card = document.getElementById('qCard');
-      const saved = answers[q.id];
-
-      let optionsHtml = '';
-      if (q.type === 'single') {
-        optionsHtml = `<div class="q-options">` +
-          q.options.map(o => `<button class="q-option${saved === o ? ' selected' : ''}" onclick="selectSingle('${q.id}', this, '${o.replace(/'/g, "\\'")}')"><span class="q-option-dot"></span>${o}</button>`).join('') +
-          `</div>`;
-      } else if (q.type === 'multi') {
-        const sel = saved || [];
-        optionsHtml = `<div class="q-multi-hint">Select all that apply</div><div class="q-options">` +
-          q.options.map(o => `<button class="q-option${sel.includes(o) ? ' selected' : ''}" onclick="selectMulti('${q.id}', this, '${o.replace(/'/g, "\\'")}')"><span class="q-option-dot"></span>${o}</button>`).join('') +
-          `</div>`;
-      } else if (q.type === 'text') {
-        optionsHtml = `<input class="q-input" id="textInput" type="text" placeholder="${q.placeholder}" value="${saved || ''}" oninput="answers['${q.id}']=this.value; updateNext()" />`;
-      }
-
-      const canNext = q.type === 'single' ? !!saved :
-                      q.type === 'multi' ? (saved && saved.length > 0) :
-                      !!(saved && saved.trim());
-
-      card.innerHTML = `
-        <div class="q-step-tag">${q.tag}</div>
-        <div class="q-question">${q.question}</div>
-        ${optionsHtml}
-        <div class="q-actions">
-          <button class="q-btn-back" onclick="goBack()" style="visibility:${current === 0 ? 'hidden' : 'visible'}">← Back</button>
-          <button class="q-btn-next" id="btnNext" onclick="goNext()" ${canNext ? '' : 'disabled'}>
-            ${current === visibleQuestions.length - 1 ? 'Generate my itinerary' : 'Continue'}
-          </button>
-        </div>
-      `;
-    }
-
-    function updateNext() {
-      const q = visibleQuestions[current];
-      const saved = answers[q.id];
-      document.getElementById('btnNext').disabled = !(saved && saved.trim());
-    }
-
-    function selectSingle(id, el, val) {
-      answers[id] = val;
-      document.querySelectorAll('.q-option').forEach(b => b.classList.remove('selected'));
-      el.classList.add('selected');
-      document.getElementById('btnNext').disabled = false;
-    }
-
-    function selectMulti(id, el, val) {
-      if (!answers[id]) answers[id] = [];
-      if (el.classList.contains('selected')) {
-        answers[id] = answers[id].filter(v => v !== val);
-        el.classList.remove('selected');
-      } else {
-        answers[id].push(val);
-        el.classList.add('selected');
-      }
-      document.getElementById('btnNext').disabled = answers[id].length === 0;
-    }
-
-    function goNext() {
-      visibleQuestions = getVisible();
-      if (current < visibleQuestions.length - 1) {
-        current++;
-        render();
-      } else {
-        showResult();
-      }
-    }
-
-    function goBack() {
-      if (current > 0) { current--; render(); }
-    }
-
-    async function showResult() {
-      const main = document.getElementById('qMain');
-      const dest = answers.destination_name || 'a destination we recommend for you';
-      const traveller = answers.traveller_type || 'traveller';
-      const duration = answers.duration || 'a week';
-      const pace = answers.pace || 'balanced';
-      const vibes = (answers.vibe || []).join(', ');
-      const budget = answers.budget || 'mid-range';
-
-      main.innerHTML = `
-        <div class="q-result">
-          <div class="q-result-tag">Your personalised itinerary</div>
-          <h2>Your trip to ${dest}</h2>
-          <div class="q-result-subtitle">${traveller} · ${duration} · ${pace.split('—')[0].trim()}</div>
-          <div class="q-itinerary">
-            <div class="q-itinerary-header">AI-generated itinerary</div>
-            <div class="q-itinerary-body" id="itineraryBody">
-              <div class="q-loading">
-                <div class="q-dot-anim"><span></span><span></span><span></span></div>
-                Crafting your itinerary...
-              </div>
-            </div>
-          </div>
-          <div class="q-email-box">
-            <div class="q-email-label">Send to my email</div>
-            <div class="q-email-hint">We'll send you a beautifully formatted version to keep.</div>
-            <div class="q-email-row">
-              <input class="q-email-input" id="emailInput" type="email" placeholder="your@email.com" />
-              <button class="q-btn-email" onclick="sendEmail()">Send it</button>
-            </div>
-            <div class="q-email-sent" id="emailSent">✓ On its way to your inbox.</div>
-          </div>
-          <button class="q-restart" onclick="restart()">← Plan another trip</button>
-        </div>
-      `;
-
-      const prompt = `You are an expert travel planner. Create a detailed, inspiring day-by-day itinerary for the following traveller:
-- Travelling as: ${traveller}
-- Destination: ${dest}
-- Duration: ${duration}
-- Travel pace: ${pace}
-- Interests: ${vibes}
-- Budget: ${budget}
-
-Format the response as a clean day-by-day itinerary. Use "Day 1:", "Day 2:" etc. For each day include morning, afternoon and evening activities. Keep it specific, practical and exciting. Max 400 words.`;
-
-      try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'claude-sonnet-4-20250514',
-            max_tokens: 1000,
-            messages: [{ role: 'user', content: prompt }]
-          })
-        });
-        const data = await res.json();
-        const text = data.content?.map(b => b.text || '').join('') || 'Could not generate itinerary. Please try again.';
-        document.getElementById('itineraryBody').textContent = text;
-      } catch(e) {
-        document.getElementById('itineraryBody').textContent = 'Something went wrong generating your itinerary. Please try again.';
-      }
-    }
-
-    function sendEmail() {
-      const val = document.getElementById('emailInput').value;
-      if (!val || !val.includes('@')) return;
-      document.getElementById('emailSent').style.display = 'block';
-    }
-
-    function restart() {
-      current = 0;
-      answers = {};
-      document.getElementById('qMain').innerHTML = '<div class="q-card" id="qCard"></div>';
-      render();
-    }
-
-    render();
-  </script>
-</body>
-</html>
+      { id: 'traveller_type', tag: 'About you', question: 'Who are you travelling with?', type: 'single', options: ['Solo', 'With a partner', 'Family with kids', 'Group of friends', 'Work / Group travel'] },
+      { id: 'destination', tag: 'Destination', question: 'Do you have a destination in mind?', type: 'single', options: ['Yes, I know where I want to go', 'No, surprise me with a recommendation'] },
+      { id: 'destination_name', tag: 'Destination', question: 'Where would you like to go?', type: 'text', placeholder: 'e.g. Kyoto, Patagonia, Morocco...', condition:
