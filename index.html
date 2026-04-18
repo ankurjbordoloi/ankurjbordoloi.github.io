@@ -1,2 +1,284 @@
-<h1>Coming Soon</h1>
-<p>My travel planner is on its way!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wandr — AI-Powered Travel Planning</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0f0f0f;
+      color: #f0ead6;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2.5rem;
+      border-bottom: 0.5px solid rgba(212,175,55,0.2);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: #d4af37;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #c8bfa0;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { color: #d4af37; }
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      border-bottom: 0.5px solid rgba(212,175,55,0.15);
+    }
+    .hero-tag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 300;
+      line-height: 1.15;
+      color: #f5edd8;
+      margin-bottom: 1.5rem;
+      letter-spacing: 1px;
+    }
+    .hero h1 span { color: #d4af37; }
+    .hero p {
+      font-size: 15px;
+      color: #a89f87;
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+    .btn-primary {
+      background: #d4af37;
+      color: #0f0f0f;
+      border: none;
+      padding: 14px 36px;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .btn-primary:hover { background: #c9a227; }
+    .btn-ghost {
+      background: transparent;
+      color: #d4af37;
+      border: 0.5px solid #d4af37;
+      padding: 14px 36px;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      margin-left: 1rem;
+    }
+    .btn-ghost:hover { background: rgba(212,175,55,0.08); }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 0.5px solid rgba(212,175,55,0.15);
+    }
+    .feature {
+      padding: 2.5rem 2rem;
+      border-right: 0.5px solid rgba(212,175,55,0.15);
+    }
+    .feature:last-child { border-right: none; }
+    .feature-icon {
+      font-size: 22px;
+      margin-bottom: 1rem;
+      color: #d4af37;
+    }
+    .feature h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #f5edd8;
+      margin-bottom: 0.75rem;
+    }
+    .feature p {
+      font-size: 13px;
+      color: #8a8270;
+      line-height: 1.8;
+    }
+    .how {
+      padding: 4rem 2.5rem;
+      text-align: center;
+      border-bottom: 0.5px solid rgba(212,175,55,0.15);
+    }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 1rem;
+    }
+    .how h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: #f5edd8;
+      margin-bottom: 3rem;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(212,175,55,0.15);
+      border: 0.5px solid rgba(212,175,55,0.15);
+    }
+    .step {
+      background: #0f0f0f;
+      padding: 2rem 1.5rem;
+      text-align: left;
+    }
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: rgba(212,175,55,0.3);
+      margin-bottom: 0.75rem;
+      line-height: 1;
+    }
+    .step h4 {
+      font-size: 14px;
+      font-weight: 500;
+      color: #f5edd8;
+      margin-bottom: 0.5rem;
+    }
+    .step p {
+      font-size: 12px;
+      color: #6e6757;
+      line-height: 1.7;
+    }
+    .cta-section {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: #141414;
+    }
+    .cta-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 300;
+      color: #f5edd8;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      font-size: 14px;
+      color: #8a8270;
+      margin-bottom: 2rem;
+    }
+    footer {
+      padding: 1.5rem 2.5rem;
+      border-top: 0.5px solid rgba(212,175,55,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #4a4538;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Wandr</div>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-tag">AI-powered travel planning</div>
+    <h1>Your journey,<br><span>perfectly crafted.</span></h1>
+    <p>Tell us how you travel — solo or with family, adventurous or relaxed, mainstream or offbeat — and we'll build your ideal itinerary from scratch.</p>
+    <button class="btn-primary">Plan my trip</button>
+    <button class="btn-ghost">Learn more</button>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <div class="feature-icon">◈</div>
+      <h3>Tailored to you</h3>
+      <p>Solo explorer, couple, family or group — your plan adapts to who you're travelling with and what you love.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">◉</div>
+      <h3>Discover or decide</h3>
+      <p>Already have a destination in mind? Or want us to surprise you? We handle both with equal care.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">◌</div>
+      <h3>Your pace, your style</h3>
+      <p>Laid-back beach days or adrenaline-filled treks — mainstream landmarks or hidden local gems. You choose.</p>
+    </div>
+  </section>
+
+  <section class="how">
+    <div class="section-label">How it works</div>
+    <h2>Four steps to your perfect trip</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Tell us about yourself</h4>
+        <p>Solo, couple, family, or group — and how you like to travel.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Pick your vibe</h4>
+        <p>Adventure or relaxation, offbeat or popular — set your travel style.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Choose or discover</h4>
+        <p>Have a destination? Tell us. Want a surprise? We'll recommend one.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Get your itinerary</h4>
+        <p>A personalised, day-by-day travel plan crafted just for you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Ready to explore?</h2>
+    <p>Join our early access list and be the first to plan your next adventure.</p>
+    <button class="btn-primary">Get early access</button>
+  </section>
+
+  <footer>
+    <span>© 2026 Wandr. All rights reserved.</span>
+    <span>Built with intention.</span>
+  </footer>
+
+</body>
+</html>
