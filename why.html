@@ -515,11 +515,47 @@
 </style>
 
 <script>
-  function submitConsultation() {
-    const name = document.getElementById('cName').value;
-    const email = document.getElementById('cEmail').value;
-    if (!name.trim() || !email.includes('@')) return;
-    document.getElementById('cConfirm').style.display = 'block';
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
+
+  async function submitConsultation() {
+    const name = document.getElementById('cName').value.trim();
+    const email = document.getElementById('cEmail').value.trim();
+    const wa = document.getElementById('cWA').value.trim();
+    const time = document.getElementById('cTime').value;
+    const dest = document.getElementById('cDest').value.trim();
+    const note = document.getElementById('cNote').value.trim();
+
+    if (!name || !email.includes('@')) {
+      alert('Please enter your name and a valid email address.');
+      return;
+    }
+
+    const btn = document.querySelector('#consultant button[onclick]');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          'Form': 'Why Page - Consultation',
+          'Name': name,
+          'Email': email,
+          'WhatsApp': wa,
+          'Preferred Time': time,
+          'Destination': dest,
+          'Notes': note
+        })
+      });
+      document.getElementById('cConfirm').style.display = 'block';
+      btn.textContent = 'Request sent';
+    } catch(err) {
+      btn.textContent = 'Request a consultation session';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again.');
+    }
   }
 
   document.querySelectorAll('a[href="#consultant"]').forEach(link => {
@@ -529,6 +565,7 @@
     });
   });
 </script>
+  
   <footer>
     <span>© 2026 Wandr. All rights reserved.</span>
     <span>Built with intention.</span>
