@@ -355,6 +355,12 @@ Format as Day 1:, Day 2: etc. with morning, afternoon and evening for each day. 
   }
   
   async function submitBooking() {
+    const lastSubmit = localStorage.getItem('wandr_last_submit');
+    if (lastSubmit && Date.now() - lastSubmit < 60000) {
+      alert('Please wait a moment before submitting again.');
+      return;
+    }
+    localStorage.setItem('wandr_last_submit', Date.now());
     const name = document.getElementById('bookName').value.trim();
     const email = document.getElementById('bookEmail').value.trim();
     const wa = document.getElementById('bookWA').value.trim();
