@@ -207,8 +207,38 @@
 
     function goNext() {
       visibleQuestions = getVisible();
-      if (current < visibleQuestions.length - 1) { current++; render(); }
-      else { showResult(); }
+      if (current < visibleQuestions.length - 1) {
+        current++;
+        render();
+      } else {
+        submitPlannerAnswers();
+        showResult();
+      }
+    }
+    
+    async function submitPlannerAnswers() {
+      const emailVal = answers.email || '';
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            'secret': 'wandr2026secure',
+            'honeypot': '',
+            'Form': 'Planner Responses',
+            'Travelling As': answers.traveller_type || '',
+            'Has Destination': answers.destination || '',
+            'Destination': answers.destination_name || 'Undecided',
+            'Duration': answers.duration || '',
+            'Pace': answers.pace || '',
+            'Interests': (answers.vibe || []).join(', '),
+            'Budget': answers.budget || ''
+          })
+        });
+      } catch(e) {
+        // silent fail — don't interrupt the user experience
+      }
     }
 
     function goBack() {
