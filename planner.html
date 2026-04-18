@@ -346,19 +346,52 @@ Format as Day 1:, Day 2: etc. with morning, afternoon and evening for each day. 
       }
     }
 
-    function submitEmail() {
-      const v = document.getElementById('emailInput').value;
-      if (!v || !v.includes('@')) return;
-      document.getElementById('emailSent').style.display = 'block';
+   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
+  
+  function submitEmail() {
+    const v = document.getElementById('emailInput').value;
+    if (!v || !v.includes('@')) return;
+    document.getElementById('emailSent').style.display = 'block';
+  }
+  
+  async function submitBooking() {
+    const name = document.getElementById('bookName').value.trim();
+    const email = document.getElementById('bookEmail').value.trim();
+    const wa = document.getElementById('bookWA').value.trim();
+    const time = document.getElementById('bookTime').value;
+    const note = document.getElementById('bookNote').value.trim();
+  
+    if (!name || !email.includes('@')) {
+      alert('Please enter your name and a valid email address.');
+      return;
     }
-
-    function submitBooking() {
-      const name = document.getElementById('bookName').value;
-      const email = document.getElementById('bookEmail').value;
-      if (!name.trim() || !email.includes('@')) return;
+  
+    const btn = document.querySelector('button[onclick="submitBooking()"]');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+  
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          'Form': 'Planner - Consultation',
+          'Name': name,
+          'Email': email,
+          'WhatsApp': wa,
+          'Preferred Time': time,
+          'Notes': note
+        })
+      });
       document.getElementById('bookSent').style.display = 'block';
+      btn.textContent = 'Request sent';
+    } catch(err) {
+      btn.textContent = 'Request a consultation session';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again.');
     }
-
+  }
     function restartFlow() {
       current = 0;
       answers = {};
