@@ -8,14 +8,11 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #0f0f0f; font-family: 'Jost', sans-serif; font-weight: 300; color: #f0ead6; min-height: 100vh; }
-
     .q-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 0.5px solid rgba(212,175,55,0.2); gap: 1rem; }
-    .q-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; flex-shrink: 0; }
     .q-progress-wrap { flex: 1; min-width: 0; }
     .q-progress-bar { height: 1px; background: rgba(212,175,55,0.15); border-radius: 1px; overflow: hidden; }
     .q-progress-fill { height: 100%; background: #d4af37; transition: width 0.4s ease; }
     .q-progress-label { font-size: 11px; color: #4a4538; letter-spacing: 1px; margin-top: 4px; text-align: right; }
-
     .q-main { min-height: calc(100vh - 65px); display: flex; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; }
     .q-card { width: 100%; max-width: 560px; }
     .q-step-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #d4af37; margin-bottom: 1rem; }
@@ -36,12 +33,10 @@
     .q-btn-next:disabled { background: rgba(212,175,55,0.2); color: #4a4538; cursor: not-allowed; }
     .q-btn-back { background: transparent; border: none; color: #4a4538; font-family: 'Jost', sans-serif; font-size: 13px; letter-spacing: 1px; cursor: pointer; padding: 14px 0; transition: color 0.2s; min-height: 48px; }
     .q-btn-back:hover { color: #d4af37; }
-
     .r-wrap { width: 100%; max-width: 620px; }
     .r-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #d4af37; margin-bottom: 1rem; }
     .r-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 7vw, 38px); font-weight: 300; color: #f5edd8; margin-bottom: 0.4rem; line-height: 1.15; }
     .r-subtitle { font-size: 13px; color: #6e6757; margin-bottom: 1.75rem; letter-spacing: 0.5px; }
-
     .r-glimpse { border: 0.5px solid rgba(212,175,55,0.2); border-radius: 2px; margin-bottom: 1.25rem; overflow: hidden; }
     .r-glimpse-header { background: rgba(212,175,55,0.08); padding: 0.875rem 1.25rem; border-bottom: 0.5px solid rgba(212,175,55,0.15); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
     .r-glimpse-label { font-size: 11px; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; }
@@ -50,7 +45,6 @@
     .r-glimpse-text { font-size: 14px; color: #a89f87; line-height: 1.9; white-space: pre-wrap; }
     .r-glimpse-fade { height: 80px; background: linear-gradient(transparent, #0f0f0f); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 1rem; }
     .r-glimpse-more { font-size: 12px; color: #4a4538; letter-spacing: 1.5px; text-transform: uppercase; }
-
     .r-email-box { border: 0.5px solid rgba(212,175,55,0.25); border-radius: 2px; padding: 1.25rem; margin-bottom: 1rem; }
     .r-email-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: #f5edd8; margin-bottom: 0.4rem; }
     .r-email-hint { font-size: 13px; color: #6e6757; margin-bottom: 1rem; line-height: 1.6; }
@@ -61,11 +55,9 @@
     .r-btn-gold { background: #d4af37; color: #0f0f0f; border: none; padding: 12px 20px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; border-radius: 2px; white-space: nowrap; transition: background 0.2s; min-height: 48px; }
     .r-btn-gold:hover { background: #c9a227; }
     .r-sent { font-size: 12px; color: #d4af37; letter-spacing: 1px; margin-top: 0.75rem; display: none; }
-
     .r-divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; }
     .r-divider-line { flex: 1; height: 0.5px; background: rgba(212,175,55,0.12); }
     .r-divider-text { font-size: 11px; color: #4a4538; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
-
     .r-premium { border: 0.5px solid rgba(212,175,55,0.4); border-radius: 2px; padding: 1.5rem 1.25rem; background: rgba(212,175,55,0.03); }
     .r-premium-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; }
     .r-premium-badge { font-size: 10px; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; background: rgba(212,175,55,0.1); border: 0.5px solid rgba(212,175,55,0.3); padding: 4px 12px; border-radius: 2px; flex-shrink: 0; }
@@ -88,7 +80,6 @@
     .r-dot-anim span:nth-child(2) { animation-delay: 0.2s; }
     .r-dot-anim span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes dp { 0%,80%,100%{opacity:.2;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
-
     @media (max-width: 520px) {
       .q-main { padding: 2rem 1.25rem; align-items: flex-start; padding-top: 2.5rem; }
       .r-row { flex-direction: column; }
@@ -122,11 +113,16 @@
     </div>
   </nav>
 
+  <input type="text" id="hpot" name="honeypot"
+    style="display:none; position:absolute; left:-9999px;"
+    tabindex="-1" autocomplete="off" />
+
   <div class="q-main" id="qMain">
     <div class="q-card" id="qCard"></div>
   </div>
 
   <script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
 
     const questions = [
       { id: 'traveller_type', tag: 'About you', question: 'Who are you travelling with?', type: 'single', options: ['Solo', 'With a partner', 'Family with kids', 'Group of friends', 'Work / Group travel'] },
@@ -216,7 +212,7 @@
         showResult();
       }
     }
-    
+
     async function submitPlannerAnswers() {
       try {
         await fetch(SCRIPT_URL, {
@@ -227,7 +223,6 @@
             'secret': 'wandr2026secure',
             'honeypot': '',
             'Form': 'Planner Responses',
-            'Session ID': SESSION_ID,
             'Travelling As': answers.traveller_type || '',
             'Has Destination': answers.destination || '',
             'Destination': answers.destination_name || 'Undecided',
@@ -240,18 +235,103 @@
       } catch(e) {}
     }
 
-    function goBack() {
-      if (current > 0) { current--; render(); }
+    async function submitEmail(btn) {
+      const lastSubmit = localStorage.getItem('wandr_last_submit');
+      if (lastSubmit && Date.now() - lastSubmit < 60000) {
+        alert('Please wait a moment before submitting again.');
+        return;
+      }
+      localStorage.setItem('wandr_last_submit', Date.now());
+
+      if (document.getElementById('hpot').value !== '') return;
+
+      const emailInput = document.getElementById('emailInput');
+      if (!emailInput) return;
+      const email = emailInput.value.trim();
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            'secret': 'wandr2026secure',
+            'honeypot': '',
+            'action': 'update_email',
+            'email': email
+          })
+        });
+        document.getElementById('emailSent').style.display = 'block';
+        btn.textContent = 'Sent';
+      } catch(e) {
+        btn.textContent = 'Send it';
+        btn.disabled = false;
+      }
     }
 
-    async function showResult() {
+    async function submitBooking() {
+      const lastSubmit = localStorage.getItem('wandr_last_submit');
+      if (lastSubmit && Date.now() - lastSubmit < 60000) {
+        alert('Please wait a moment before submitting again.');
+        return;
+      }
+      if (document.getElementById('hpot').value !== '') return;
+      localStorage.setItem('wandr_last_submit', Date.now());
+
+      const name = document.getElementById('bookName').value.trim();
+      const email = document.getElementById('bookEmail').value.trim();
+      const wa = document.getElementById('bookWA').value.trim();
+      const time = document.getElementById('bookTime').value;
+      const note = document.getElementById('bookNote').value.trim();
+
+      if (!name || !email.includes('@')) {
+        alert('Please enter your name and a valid email address.');
+        return;
+      }
+
+      const btn = document.querySelector('button[onclick="submitBooking()"]');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            'secret': 'wandr2026secure',
+            'honeypot': '',
+            'Form': 'Planner - Consultation',
+            'Name': name,
+            'Email': email,
+            'WhatsApp': wa,
+            'Preferred Time': time,
+            'Destination': answers.destination_name || 'Undecided',
+            'Notes': note
+          })
+        });
+        document.getElementById('bookSent').style.display = 'block';
+        btn.textContent = 'Request sent';
+      } catch(err) {
+        btn.textContent = 'Request a consultation session';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again.');
+      }
+    }
+
+    function showResult() {
       const main = document.getElementById('qMain');
       const dest = answers.destination_name || 'a destination we recommend for you';
       const traveller = answers.traveller_type || 'traveller';
       const duration = answers.duration || 'a week';
       const pace = answers.pace || 'balanced';
-      const vibes = (answers.vibe || []).join(', ');
-      const budget = answers.budget || 'mid-range';
 
       main.style.alignItems = 'flex-start';
       main.style.paddingTop = '2.5rem';
@@ -268,9 +348,7 @@
               <span class="r-glimpse-badge">Full plan via email</span>
             </div>
             <div class="r-glimpse-body">
-              <div class="r-glimpse-text" id="glimpseText">
-                <div class="r-loading"><div class="r-dot-anim"><span></span><span></span><span></span></div>Crafting your itinerary...</div>
-              </div>
+              <div class="r-glimpse-text" id="glimpseText">Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...\n\nDay 2: Head out early to beat the crowds at the most iconic sight in the city. Afternoon free for wandering — follow your instincts rather than the map.</div>
             </div>
             <div class="r-glimpse-fade">
               <span class="r-glimpse-more">Continue reading in your inbox ↓</span>
@@ -322,9 +400,6 @@
                 <label class="r-label">WhatsApp number</label>
                 <input class="r-input" id="bookWA" type="tel" placeholder="+91 98765 43210" />
               </div>
-              <input type="text" id="hpot" name="honeypot" 
-              style="display:none; position:absolute; left:-9999px;" 
-              tabindex="-1" autocomplete="off" />
               <div>
                 <label class="r-label">Preferred time to connect</label>
                 <select class="r-select" id="bookTime">
@@ -347,112 +422,8 @@
 
           <button class="r-restart" onclick="restartFlow()">← Plan another trip</button>
         </div>`;
+    }
 
-      const prompt = `You are an expert travel planner. Create a detailed day-by-day itinerary for the following traveller:
-- Travelling as: ${traveller}
-- Destination: ${dest}
-- Duration: ${duration}
-- Travel pace: ${pace}
-- Interests: ${vibes}
-- Budget: ${budget}
-
-Format as Day 1:, Day 2: etc. with morning, afternoon and evening for each day. Be specific, practical and inspiring. Max 400 words. Start directly with Day 1.`;
-
-document.getElementById('glimpseText').textContent = 'Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...\n\nDay 2: Head out early to beat the crowds at the most iconic sight in the city. Afternoon free for wandering — follow your instincts rather than the map.';
-
-   const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
-  
-  async function submitEmail(btn) {
-    const lastSubmit = localStorage.getItem('wandr_last_submit');
-    if (lastSubmit && Date.now() - lastSubmit < 60000) {
-      alert('Please wait a moment before submitting again.');
-      return;
-    }
-    localStorage.setItem('wandr_last_submit', Date.now());
-  
-    if (document.getElementById('hpot') && document.getElementById('hpot').value !== '') return;
-  
-    const emailInput = document.getElementById('emailInput');
-    if (!emailInput) return;
-    const email = emailInput.value.trim();
-    if (!email || !email.includes('@')) {
-      alert('Please enter a valid email address.');
-      return;
-    }
-  
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-  
-    try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          'secret': 'wandr2026secure',
-          'honeypot': '',
-          'action': 'update_email',
-          'email': email
-        })
-      });
-      document.getElementById('emailSent').style.display = 'block';
-      btn.textContent = 'Sent';
-    } catch(e) {
-      document.getElementById('emailSent').style.display = 'none';
-      btn.textContent = 'Send it';
-      btn.disabled = false;
-    }
-  }
-  
-  async function submitBooking() {
-    const lastSubmit = localStorage.getItem('wandr_last_submit');
-    if (lastSubmit && Date.now() - lastSubmit < 60000) {
-      alert('Please wait a moment before submitting again.');
-      return;
-    }
-    if (document.getElementById('hpot').value !== '') {
-    return;
-    }
-    localStorage.setItem('wandr_last_submit', Date.now());
-    const name = document.getElementById('bookName').value.trim();
-    const email = document.getElementById('bookEmail').value.trim();
-    const wa = document.getElementById('bookWA').value.trim();
-    const time = document.getElementById('bookTime').value;
-    const note = document.getElementById('bookNote').value.trim();
-  
-    if (!name || !email.includes('@')) {
-      alert('Please enter your name and a valid email address.');
-      return;
-    }
-  
-    const btn = document.querySelector('button[onclick="submitBooking()"]');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-  
-    try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          'secret': 'wandr2026secure',
-          'Form': 'Planner - Consultation',
-          'Name': name,
-          'Email': email,
-          'WhatsApp': wa,
-          'Preferred Time': time,
-          'Destination': answers.destination_name || 'Undecided',
-          'Notes': note
-        })
-      });
-      document.getElementById('bookSent').style.display = 'block';
-      btn.textContent = 'Request sent';
-    } catch(err) {
-      btn.textContent = 'Request a consultation session';
-      btn.disabled = false;
-      alert('Something went wrong. Please try again.');
-    }
-  }
     function restartFlow() {
       current = 0;
       answers = {};
