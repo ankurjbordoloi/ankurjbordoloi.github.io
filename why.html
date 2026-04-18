@@ -468,7 +468,9 @@
               </select>
             </div>
           </div>
-
+          <input type="text" id="hpot" name="honeypot" 
+          style="display:none; position:absolute; left:-9999px;" 
+          tabindex="-1" autocomplete="off" />
           <div>
             <label style="font-size:11px; color:#4a4538; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:0.4rem; display:block;">Where are you thinking of going?</label>
             <input id="cDest" type="text" placeholder="e.g. Japan, Morocco, not sure yet..."
@@ -522,6 +524,9 @@
     if (lastSubmit && Date.now() - lastSubmit < 60000) {
       alert('Please wait a moment before submitting again.');
       return;
+    }
+    if (document.getElementById('hpot').value !== '') {
+    return;
     }
     localStorage.setItem('wandr_last_submit', Date.now());
     const name = document.getElementById('cName').value.trim();
