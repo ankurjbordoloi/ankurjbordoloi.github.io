@@ -293,6 +293,9 @@
                 <label class="r-label">WhatsApp number</label>
                 <input class="r-input" id="bookWA" type="tel" placeholder="+91 98765 43210" />
               </div>
+              <input type="text" id="hpot" name="honeypot" 
+              style="display:none; position:absolute; left:-9999px;" 
+              tabindex="-1" autocomplete="off" />
               <div>
                 <label class="r-label">Preferred time to connect</label>
                 <select class="r-select" id="bookTime">
@@ -359,6 +362,9 @@ Format as Day 1:, Day 2: etc. with morning, afternoon and evening for each day. 
     if (lastSubmit && Date.now() - lastSubmit < 60000) {
       alert('Please wait a moment before submitting again.');
       return;
+    }
+    if (document.getElementById('hpot').value !== '') {
+    return;
     }
     localStorage.setItem('wandr_last_submit', Date.now());
     const name = document.getElementById('bookName').value.trim();
