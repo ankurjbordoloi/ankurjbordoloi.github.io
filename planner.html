@@ -213,6 +213,14 @@
       }
     }
 
+    function goBack() {
+      if (current > 0) {
+        current--;
+        visibleQuestions = getVisible();
+        render();
+      }
+    }
+
     async function submitPlannerAnswers() {
       try {
         await fetch(SCRIPT_URL, {
@@ -242,9 +250,7 @@
         return;
       }
       localStorage.setItem('wandr_last_submit', Date.now());
-
       if (document.getElementById('hpot').value !== '') return;
-
       const emailInput = document.getElementById('emailInput');
       if (!emailInput) return;
       const email = emailInput.value.trim();
@@ -252,10 +258,8 @@
         alert('Please enter a valid email address.');
         return;
       }
-
       btn.textContent = 'Sending...';
       btn.disabled = true;
-
       try {
         await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -284,22 +288,18 @@
       }
       if (document.getElementById('hpot').value !== '') return;
       localStorage.setItem('wandr_last_submit', Date.now());
-
       const name = document.getElementById('bookName').value.trim();
       const email = document.getElementById('bookEmail').value.trim();
       const wa = document.getElementById('bookWA').value.trim();
       const time = document.getElementById('bookTime').value;
       const note = document.getElementById('bookNote').value.trim();
-
       if (!name || !email.includes('@')) {
         alert('Please enter your name and a valid email address.');
         return;
       }
-
       const btn = document.querySelector('button[onclick="submitBooking()"]');
       btn.textContent = 'Sending...';
       btn.disabled = true;
-
       try {
         await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -332,16 +332,13 @@
       const traveller = answers.traveller_type || 'traveller';
       const duration = answers.duration || 'a week';
       const pace = answers.pace || 'balanced';
-
       main.style.alignItems = 'flex-start';
       main.style.paddingTop = '2.5rem';
-
       main.innerHTML = `
         <div class="r-wrap">
           <div class="r-tag">Your personalised itinerary</div>
           <div class="r-title">Your trip to ${dest}</div>
           <div class="r-subtitle">${traveller} · ${duration} · ${pace.split('—')[0].trim()}</div>
-
           <div class="r-glimpse">
             <div class="r-glimpse-header">
               <span class="r-glimpse-label">Itinerary preview</span>
@@ -354,7 +351,6 @@
               <span class="r-glimpse-more">Continue reading in your inbox ↓</span>
             </div>
           </div>
-
           <div class="r-email-box">
             <div class="r-email-title">Get your full itinerary</div>
             <div class="r-email-hint">We'll send your complete day-by-day plan, curated tips, and local recommendations straight to your inbox.</div>
@@ -364,13 +360,11 @@
             </div>
             <div class="r-sent" id="emailSent">✓ Your full itinerary is on its way.</div>
           </div>
-
           <div class="r-divider">
             <div class="r-divider-line"></div>
             <div class="r-divider-text">Want something more personal?</div>
             <div class="r-divider-line"></div>
           </div>
-
           <div class="r-premium">
             <div class="r-premium-top">
               <div>
@@ -419,7 +413,6 @@
             <button class="r-btn-gold" style="width:100%; padding:14px;" onclick="submitBooking()">Request a consultation session</button>
             <div class="r-book-sent" id="bookSent">✓ We've received your request. Your consultant will reach out within 24 hours to confirm your session.</div>
           </div>
-
           <button class="r-restart" onclick="restartFlow()">← Plan another trip</button>
         </div>`;
     }
