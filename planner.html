@@ -122,7 +122,8 @@
   </div>
 
   <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
+    const WORKER_URL = 'https://wandr-backend.ankurjbordoloi.workers.dev';
 
     const questions = [
       { id: 'traveller_type', tag: 'About you', question: 'Who are you travelling with?', type: 'single', options: ['Solo', 'With a partner', 'Family with kids', 'Group of friends', 'Work / Group travel'] },
@@ -258,9 +259,33 @@
         alert('Please enter a valid email address.');
         return;
       }
+
       btn.textContent = 'Sending...';
       btn.disabled = true;
+
+      const dest = answers.destination_name || 'a destination we recommend for you';
+      const traveller = answers.traveller_type || 'traveller';
+      const duration = answers.duration || 'a week';
+      const pace = answers.pace || 'balanced';
+      const vibes = (answers.vibe || []).join(', ');
+      const budget = answers.budget || 'mid-range';
+
       try {
+        await fetch(`${WORKER_URL}/email`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            traveller,
+            dest,
+            duration,
+            pace,
+            vibes,
+            budget,
+            itinerary: window._fullItinerary || 'Your full itinerary is being prepared.'
+          })
+        });
+
         await fetch(SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
@@ -272,6 +297,7 @@
             'email': email
           })
         });
+
         document.getElementById('emailSent').style.display = 'block';
         btn.textContent = 'Sent';
       } catch(e) {
@@ -332,8 +358,12 @@
       const traveller = answers.traveller_type || 'traveller';
       const duration = answers.duration || 'a week';
       const pace = answers.pace || 'balanced';
+      const vibes = (answers.vibe || []).join(', ');
+      const budget = answers.budget || 'mid-range';
+
       main.style.alignItems = 'flex-start';
       main.style.paddingTop = '2.5rem';
+
       main.innerHTML = `
         <div class="r-wrap">
           <div class="r-tag">Your personalised itinerary</div>
@@ -345,7 +375,9 @@
               <span class="r-glimpse-badge">Full plan via email</span>
             </div>
             <div class="r-glimpse-body">
-              <div class="r-glimpse-text" id="glimpseText">Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...\n\nDay 2: Head out early to beat the crowds at the most iconic sight in the city. Afternoon free for wandering — follow your instincts rather than the map.</div>
+              <div class="r-glimpse-text" id="glimpseText">
+                <div class="r-loading"><div class="r-dot-anim"><span></span><span></span><span></span></div>Crafting your itinerary...</div>
+              </div>
             </div>
             <div class="r-glimpse-fade">
               <span class="r-glimpse-more">Continue reading in your inbox ↓</span>
@@ -415,11 +447,27 @@
           </div>
           <button class="r-restart" onclick="restartFlow()">← Plan another trip</button>
         </div>`;
+
+      fetch(`${WORKER_URL}/itinerary`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ traveller, dest, duration, pace, vibes, budget })
+      })
+      .then(r => r.json())
+      .then(data => {
+        window._fullItinerary = data.itinerary || '';
+        const lines = window._fullItinerary.split('\n').filter(l => l.trim());
+        document.getElementById('glimpseText').textContent = lines.slice(0, 7).join('\n');
+      })
+      .catch(() => {
+        document.getElementById('glimpseText').textContent = 'Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...\n\nDay 2: Head out early to beat the crowds at the most iconic sight in the city. Afternoon free for wandering — follow your instincts rather than the map.';
+      });
     }
 
     function restartFlow() {
       current = 0;
       answers = {};
+      window._fullItinerary = '';
       const main = document.getElementById('qMain');
       main.style.alignItems = 'center';
       main.style.paddingTop = '2.5rem';
