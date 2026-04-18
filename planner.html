@@ -282,7 +282,7 @@
             <div class="r-email-hint">We'll send your complete day-by-day plan, curated tips, and local recommendations straight to your inbox.</div>
             <div class="r-row">
               <input class="r-input" id="emailInput" type="email" placeholder="your@email.com" />
-              <button class="r-btn-gold" onclick="submitEmail()">Send it</button>
+              <button class="r-btn-gold" onclick="submitEmail(this)">Send it</button>
             </div>
             <div class="r-sent" id="emailSent">✓ Your full itinerary is on its way.</div>
           </div>
@@ -380,7 +380,7 @@ Format as Day 1:, Day 2: etc. with morning, afternoon and evening for each day. 
 
    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
   
-    async function submitEmail() {
+  async function submitEmail(btn) {
     const lastSubmit = localStorage.getItem('wandr_last_submit');
     if (lastSubmit && Date.now() - lastSubmit < 60000) {
       alert('Please wait a moment before submitting again.');
@@ -388,12 +388,16 @@ Format as Day 1:, Day 2: etc. with morning, afternoon and evening for each day. 
     }
     localStorage.setItem('wandr_last_submit', Date.now());
   
-    if (document.getElementById('hpot').value !== '') return;
+    if (document.getElementById('hpot') && document.getElementById('hpot').value !== '') return;
   
-    const email = document.getElementById('emailInput').value.trim();
-    if (!email || !email.includes('@')) return;
+    const emailInput = document.getElementById('emailInput');
+    if (!emailInput) return;
+    const email = emailInput.value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
+    }
   
-    const btn = document.getElementById('emailBtn');
     btn.textContent = 'Sending...';
     btn.disabled = true;
   
@@ -412,6 +416,7 @@ Format as Day 1:, Day 2: etc. with morning, afternoon and evening for each day. 
       document.getElementById('emailSent').style.display = 'block';
       btn.textContent = 'Sent';
     } catch(e) {
+      document.getElementById('emailSent').style.display = 'none';
       btn.textContent = 'Send it';
       btn.disabled = false;
     }
