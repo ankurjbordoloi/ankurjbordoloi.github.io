@@ -358,25 +358,7 @@
 
 Format as Day 1:, Day 2: etc. with morning, afternoon and evening for each day. Be specific, practical and inspiring. Max 400 words. Start directly with Day 1.`;
 
-      try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'claude-sonnet-4-20250514',
-            max_tokens: 1000,
-            messages: [{ role: 'user', content: prompt }]
-          })
-        });
-        const data = await res.json();
-        const full = data.content?.map(b => b.text || '').join('') || '';
-        const lines = full.split('\n').filter(l => l.trim());
-        const glimpse = lines.slice(0, 7).join('\n');
-        document.getElementById('glimpseText').textContent = glimpse;
-      } catch(e) {
-        document.getElementById('glimpseText').textContent = 'Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...';
-      }
-    }
+document.getElementById('glimpseText').textContent = 'Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...\n\nDay 2: Head out early to beat the crowds at the most iconic sight in the city. Afternoon free for wandering — follow your instincts rather than the map.';
 
    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
   
