@@ -127,7 +127,7 @@
   </div>
 
   <script>
-    const SESSION_ID = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
     const questions = [
       { id: 'traveller_type', tag: 'About you', question: 'Who are you travelling with?', type: 'single', options: ['Solo', 'With a partner', 'Family with kids', 'Group of friends', 'Work / Group travel'] },
       { id: 'destination', tag: 'Destination', question: 'Do you have a destination in mind?', type: 'single', options: ['Yes, I know where I want to go', 'No, surprise me with a recommendation'] },
@@ -381,42 +381,41 @@ Format as Day 1:, Day 2: etc. with morning, afternoon and evening for each day. 
    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
   
     async function submitEmail() {
-      const lastSubmit = localStorage.getItem('wandr_last_submit');
-      if (lastSubmit && Date.now() - lastSubmit < 60000) {
-        alert('Please wait a moment before submitting again.');
-        return;
-      }
-      localStorage.setItem('wandr_last_submit', Date.now());
-    
-      if (document.getElementById('hpot').value !== '') return;
-    
-      const email = document.getElementById('emailInput').value.trim();
-      if (!email || !email.includes('@')) return;
-    
-      const btn = document.getElementById('emailBtn');
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
-    
-      try {
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            'secret': 'wandr2026secure',
-            'honeypot': '',
-            'action': 'update_email',
-            'session_id': SESSION_ID,
-            'email': email
-          })
-        });
-        document.getElementById('emailSent').style.display = 'block';
-        btn.textContent = 'Sent';
-      } catch(e) {
-        btn.textContent = 'Send it';
-        btn.disabled = false;
-      }
+    const lastSubmit = localStorage.getItem('wandr_last_submit');
+    if (lastSubmit && Date.now() - lastSubmit < 60000) {
+      alert('Please wait a moment before submitting again.');
+      return;
     }
+    localStorage.setItem('wandr_last_submit', Date.now());
+  
+    if (document.getElementById('hpot').value !== '') return;
+  
+    const email = document.getElementById('emailInput').value.trim();
+    if (!email || !email.includes('@')) return;
+  
+    const btn = document.getElementById('emailBtn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+  
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          'secret': 'wandr2026secure',
+          'honeypot': '',
+          'action': 'update_email',
+          'email': email
+        })
+      });
+      document.getElementById('emailSent').style.display = 'block';
+      btn.textContent = 'Sent';
+    } catch(e) {
+      btn.textContent = 'Send it';
+      btn.disabled = false;
+    }
+  }
   
   async function submitBooking() {
     const lastSubmit = localStorage.getItem('wandr_last_submit');
