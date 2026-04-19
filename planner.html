@@ -457,7 +457,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
       .then(data => {
         window._fullItinerary = data.itinerary || '';
         const lines = window._fullItinerary.split('\n').filter(l => l.trim());
-        document.getElementById('glimpseText').textContent = lines.slice(0, 7).join('\n');
+        document.getElementById('glimpseText').textContent = lines.slice(0, 4).join('\n');
       })
       .catch(() => {
         document.getElementById('glimpseText').textContent = 'Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...\n\nDay 2: Head out early to beat the crowds at the most iconic sight in the city. Afternoon free for wandering — follow your instincts rather than the map.';
