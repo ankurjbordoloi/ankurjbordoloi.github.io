@@ -476,7 +476,13 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
           return;
         }
         window._fullItinerary = data.itinerary || '';
-        const lines = window._fullItinerary.split('\n').filter(l => l.trim());
+        const cleaned = window._fullItinerary
+          .replace(/#{1,6}\s/g, '')
+          .replace(/\*\*(.*?)\*\*/g, '$1')
+          .replace(/\*(.*?)\*/g, '$1')
+          .replace(/---/g, '');
+        window._fullItinerary = cleaned;
+        const lines = cleaned.split('\n').filter(l => l.trim());
         document.getElementById('glimpseText').textContent = lines.slice(0, 4).join('\n');
         const emailBtn = document.getElementById('emailBtn');
         if (emailBtn) { emailBtn.disabled = false; emailBtn.style.background = '#d4af37'; emailBtn.style.color = '#0f0f0f'; emailBtn.style.cursor = 'pointer'; }
