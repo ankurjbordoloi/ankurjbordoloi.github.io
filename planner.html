@@ -459,9 +459,9 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
           document.getElementById('glimpseText').innerHTML = `
             <div style="font-size:14px; color:#a89f87; line-height:1.8;">
               <p>We couldn't recognise <span style="color:#d4af37;">${dest}</span> as a destination — this could be a typo or an unfamiliar place name.</p>
-              <p style="margin-top:1rem;"><span style="color:#d4af37; cursor:pointer; text-decoration:underline;" onclick="restartFlow()">← Try again with a different destination</span></p>
-              <p style="margin-top:1rem;">Or if you're looking for something offbeat or unconventional, our travel consultant can help — just fill in the form below.</p>
-            </div>`;
+              <p style="margin-top:0.3rem;"><span style="color:#d4af37; cursor:pointer; text-decoration:underline;" onclick="restartFlow()">← Try again with a different destination</span></p>
+              <p style="margin-top:0.3rem;">Or if you're looking for something offbeat or unconventional, our travel consultant can help — just fill in the form below.</p>
+              </div>`;
           return;
         }
         window._fullItinerary = data.itinerary || '';
