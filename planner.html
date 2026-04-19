@@ -455,6 +455,19 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
       })
       .then(r => r.json())
       .then(data => {
+        if (data.error === 'invalid_destination') {
+          document.getElementById('glimpseText').innerHTML = `
+            <div style="font-size:14px; color:#a89f87; line-height:1.9;">
+              We couldn't recognise <span style="color:#d4af37;">${dest}</span> as a destination. This could be a typo or an unfamiliar place name.
+              <br><br>
+              You have two options:
+              <br><br>
+              <span style="color:#d4af37; cursor:pointer; text-decoration:underline;" onclick="restartFlow()">← Try again with a different destination</span>
+              <br><br>
+              Or if you're looking for something offbeat or unconventional, our travel consultant can help you plan it personally.
+            </div>`;
+          return;
+        }
         window._fullItinerary = data.itinerary || '';
         const lines = window._fullItinerary.split('\n').filter(l => l.trim());
         document.getElementById('glimpseText').textContent = lines.slice(0, 4).join('\n');
