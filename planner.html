@@ -295,8 +295,16 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
           body: JSON.stringify({
             'secret': 'wandr2026secure',
             'honeypot': '',
-            'action': 'update_email',
-            'email': email
+            'Form': 'Planner Responses',
+            'Travelling As': answers.traveller_type || '',
+            'Travelling From': answers.travelling_from || '',
+            'Has Destination': answers.destination || '',
+            'Destination': answers.destination_name ? answers.destination_name.toUpperCase() : 'Undecided',
+            'Duration': answers.duration || '',
+            'Pace': answers.pace || '',
+            'Interests': (answers.vibe || []).join(', '),
+            'Budget': answers.budget || '',
+            'Email': email
           })
         });
 
