@@ -388,7 +388,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
             <div class="r-email-hint">We'll send your complete day-by-day plan, curated tips, and local recommendations straight to your inbox.</div>
             <div class="r-row">
               <input class="r-input" id="emailInput" type="email" placeholder="your@email.com" />
-              <button class="r-btn-gold" onclick="submitEmail(this)">Send it</button>
+              <button class="r-btn-gold" id="emailBtn" onclick="submitEmail(this)" disabled style="background:rgba(212,175,55,0.2); color:#4a4538; cursor:not-allowed;">Send it</button>
             </div>
             <div class="r-sent" id="emailSent">✓ Your full itinerary is on its way.</div>
           </div>
@@ -467,6 +467,8 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
         window._fullItinerary = data.itinerary || '';
         const lines = window._fullItinerary.split('\n').filter(l => l.trim());
         document.getElementById('glimpseText').textContent = lines.slice(0, 4).join('\n');
+        const emailBtn = document.getElementById('emailBtn');
+        if (emailBtn) { emailBtn.disabled = false; emailBtn.style.background = '#d4af37'; emailBtn.style.color = '#0f0f0f'; emailBtn.style.cursor = 'pointer'; }
       })
       .catch(() => {
         document.getElementById('glimpseText').textContent = 'Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...\n\nDay 2: Head out early to beat the crowds at the most iconic sight in the city. Afternoon free for wandering — follow your instincts rather than the map.';
