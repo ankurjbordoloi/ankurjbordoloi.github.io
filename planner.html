@@ -354,7 +354,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
 
     function showResult() {
       const main = document.getElementById('qMain');
-      const dest = answers.destination_name || 'a destination we recommend for you';
+      const dest = answers.destination_name ? answers.destination_name.toUpperCase() : 'a destination we recommend for you';
       const traveller = answers.traveller_type || 'traveller';
       const duration = answers.duration || 'a week';
       const pace = answers.pace || 'balanced';
@@ -367,7 +367,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
       main.innerHTML = `
         <div class="r-wrap">
           <div class="r-tag">Your personalised itinerary</div>
-          <div class="r-title">Your trip to ${dest}</div>
+          <div class="r-title">Your trip to <span style="color:#d4af37">${dest}</div>
           <div class="r-subtitle">${traveller} · ${duration} · ${pace.split('—')[0].trim()}</div>
           <div class="r-glimpse">
             <div class="r-glimpse-header">
