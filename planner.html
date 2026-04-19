@@ -127,6 +127,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
 
     const questions = [
       { id: 'traveller_type', tag: 'About you', question: 'Who are you travelling with?', type: 'single', options: ['Solo', 'With a partner', 'Family with kids', 'Group of friends', 'Work / Group travel'] },
+      { id: 'travelling_from', tag: 'About you', question: 'Where are you travelling from?', type: 'text', placeholder: 'e.g. Mumbai, London, New York...' },
       { id: 'destination', tag: 'Destination', question: 'Do you have a destination in mind?', type: 'single', options: ['Yes, I know where I want to go', 'No, surprise me with a recommendation'] },
       { id: 'destination_name', tag: 'Destination', question: 'Where would you like to go?', type: 'text', placeholder: 'e.g. Kyoto, Patagonia, Morocco...', condition: (ans) => ans.destination === 'Yes, I know where I want to go' },
       { id: 'duration', tag: 'Your trip', question: 'How long is your trip?', type: 'single', options: ['A weekend (2–3 days)', 'About a week', 'Two weeks', 'A month or more'] },
@@ -233,6 +234,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
             'honeypot': '',
             'Form': 'Planner Responses',
             'Travelling As': answers.traveller_type || '',
+            'Travelling From': answers.travelling_from || '',
             'Has Destination': answers.destination || '',
             'Destination': answers.destination_name || 'Undecided',
             'Duration': answers.duration || '',
@@ -360,6 +362,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
       const pace = answers.pace || 'balanced';
       const vibes = (answers.vibe || []).join(', ');
       const budget = answers.budget || 'mid-range';
+      const from = answers.travelling_from || 'not specified';
 
       main.style.alignItems = 'flex-start';
       main.style.paddingTop = '2.5rem';
@@ -451,7 +454,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
       fetch(`${WORKER_URL}/itinerary`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ traveller, dest, duration, pace, vibes, budget })
+        body: JSON.stringify({ traveller, dest, duration, pace, vibes, budget, from })
       })
       .then(r => r.json())
       .then(data => {
