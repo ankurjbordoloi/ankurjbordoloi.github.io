@@ -126,7 +126,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
     const WORKER_URL = 'https://wandr-backend.ankurjbordoloi.workers.dev';
 
     const questions = [
-      { id: 'traveller_type', tag: 'About you', question: 'Who are you travelling with?', type: 'single', options: ['Solo', 'With a partner', 'Family with kids', 'Group of friends', 'Work / Group travel'] },
+      { id: 'traveller_type', tag: 'About you', question: 'Who are you travelling with?', type: 'single', options: ['Solo', 'With a partner', 'Family with kids', 'Family with parents / joint family', 'Group of friends', 'Work / Group travel'] },
       { id: 'travelling_from', tag: 'About you', question: 'Where are you travelling from?', type: 'text', placeholder: 'e.g. Mumbai, London, New York...' },
       { id: 'destination', tag: 'Destination', question: 'Do you have a destination in mind?', type: 'single', options: ['Yes, I know where I want to go', 'No, surprise me with a recommendation'] },
       { id: 'destination_name', tag: 'Destination', question: 'Where would you like to go?', type: 'text', placeholder: 'e.g. Kyoto, Patagonia, Morocco...', condition: (ans) => ans.destination === 'Yes, I know where I want to go' },
