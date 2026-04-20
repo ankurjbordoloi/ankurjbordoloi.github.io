@@ -299,7 +299,9 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
             'Travelling As': answers.traveller_type || '',
             'Travelling From': answers.travelling_from || '',
             'Has Destination': answers.destination || '',
-            'Destination': answers.destination_name ? answers.destination_name.trim().toUpperCase() : 'Undecided',
+            'Destination': answers.destination_name 
+              ? answers.destination_name.trim().toUpperCase() 
+              : (window._recommendedDest ? window._recommendedDest.toUpperCase() : 'Undecided'),
             'Duration': answers.duration || '',
             'Pace': answers.pace || '',
             'Interests': (answers.vibe || []).join(', '),
@@ -476,6 +478,9 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
           return;
         }
         window._fullItinerary = data.itinerary || '';
+        if (data.recommended_dest) {
+          window._recommendedDest = data.recommended_dest;
+        }
         const cleaned = window._fullItinerary
           .replace(/#{1,6}\s/g, '')
           .replace(/\*\*(.*?)\*\*/g, '$1')
