@@ -392,6 +392,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
     }
 
     function showResult() {
+      const main = document.getElementById('qMain');
       const dest = answers.destination_name ? answers.destination_name.toUpperCase() : null;
       const traveller = answers.traveller_type || 'traveller';
       const duration = answers.duration || 'a week';
@@ -403,7 +404,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
 
       main.style.alignItems = 'flex-start';
       main.style.paddingTop = '2.5rem';
-
+      
       main.innerHTML = `
         <div class="r-wrap">
           <div class="r-tag">Your personalised itinerary</div>
