@@ -131,6 +131,19 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
       { id: 'destination', tag: 'Destination', question: 'Do you have a destination in mind?', type: 'single', options: ['Yes, I know where I want to go', 'No, surprise me with a recommendation'] },
       { id: 'destination_name', tag: 'Destination', question: 'Where would you like to go?', type: 'text', placeholder: 'e.g. Kyoto, Patagonia, Morocco...', condition: (ans) => ans.destination === 'Yes, I know where I want to go' },
       { id: 'duration', tag: 'Your trip', question: 'How long is your trip?', type: 'single', options: ['A weekend (2–3 days)', 'About a week', 'Two weeks', 'A month or more'] },
+      { id: 'travel_month', tag: 'Your trip', question: 'Which month are you travelling?', type: 'dropdown', getOptions: () => {
+          const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+          const now = new Date();
+          const opts = [];
+          for (let i = 0; i < 6; i++) {
+            const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+            opts.push(months[d.getMonth()] + ' ' + d.getFullYear());
+          }
+          opts.push('More than 6 months away');
+          opts.push('Not sure yet');
+          return opts;
+        }
+      },
       { id: 'pace', tag: 'Your style', question: 'How do you like to travel?', type: 'single', options: ['Laid-back — slow down and soak it in', 'Balanced — a bit of everything', 'Action-packed — see as much as possible'] },
       { id: 'vibe', tag: 'Your style', question: 'What kind of experiences excite you?', type: 'multi', options: ['Adventure & outdoors', 'Culture & history', 'Food & nightlife', 'Wellness & relaxation', 'Hidden gems & offbeat', 'Mainstream highlights'] },
       { id: 'budget', tag: 'Budget', question: 'What is your travel budget like?', type: 'single', options: ['Budget — keep costs low', 'Mid-range — comfort without splurging', 'Premium — I want the best experience'] }
@@ -163,10 +176,16 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
         optionsHtml = `<div class="q-multi-hint">Select all that apply</div><div class="q-options">` +
           q.options.map(o => `<button class="q-option${sel.includes(o) ? ' selected' : ''}" onclick="selectMulti('${q.id}', this, '${o.replace(/'/g, "\\'")}')"><span class="q-option-dot"></span>${o}</button>`).join('') +
           `</div>`;
+      } else if (q.type === 'dropdown') {
+        const opts = q.getOptions();
+        optionsHtml = `<select class="q-input r-select" id="dropdownInput" onchange="answers['${q.id}']=this.value; updateNextDropdown()" style="cursor:pointer;">
+          <option value="" disabled ${!saved ? 'selected' : ''}>Select a month...</option>
+          ${opts.map(o => `<option value="${o}" ${saved === o ? 'selected' : ''}>${o}</option>`).join('')}
+        </select>`;
       } else if (q.type === 'text') {
         optionsHtml = `<input class="q-input" id="textInput" type="text" placeholder="${q.placeholder}" value="${saved || ''}" oninput="answers['${q.id}']=this.value; updateNext()" />`;
       }
-      const canNext = q.type === 'single' ? !!saved : q.type === 'multi' ? (saved && saved.length > 0) : !!(saved && saved.trim());
+      const canNext = q.type === 'single' ? !!saved : q.type === 'multi' ? (saved && saved.length > 0) : q.type === 'dropdown' ? !!saved : !!(saved && saved.trim());
       card.innerHTML = `
         <div class="q-step-tag">${q.tag}</div>
         <div class="q-question">${q.question}</div>
@@ -183,6 +202,12 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
       const q = visibleQuestions[current];
       const saved = answers[q.id];
       document.getElementById('btnNext').disabled = !(saved && saved.trim());
+    }
+
+    function updateNextDropdown() {
+      const q = visibleQuestions[current];
+      const saved = answers[q.id];
+      document.getElementById('btnNext').disabled = !saved;
     }
 
     function selectSingle(id, el, val) {
@@ -238,6 +263,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
             'Has Destination': answers.destination || '',
             'Destination': answers.destination_name ? answers.destination_name.trim().toUpperCase() : 'Undecided',
             'Duration': answers.duration || '',
+            'Travel Month': answers.travel_month || '',
             'Pace': answers.pace || '',
             'Interests': (answers.vibe || []).join(', '),
             'Budget': answers.budget || ''
@@ -303,6 +329,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
               ? answers.destination_name.trim().toUpperCase() 
               : (window._recommendedDest ? window._recommendedDest.toUpperCase() : 'Undecided'),
             'Duration': answers.duration || '',
+            'Travel Month': answers.travel_month || '',
             'Pace': answers.pace || '',
             'Interests': (answers.vibe || []).join(', '),
             'Budget': answers.budget || '',
@@ -365,10 +392,10 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
     }
 
     function showResult() {
-      const main = document.getElementById('qMain');
       const dest = answers.destination_name ? answers.destination_name.toUpperCase() : null;
       const traveller = answers.traveller_type || 'traveller';
       const duration = answers.duration || 'a week';
+      const month = answers.travel_month || '';
       const pace = answers.pace || 'balanced';
       const vibes = (answers.vibe || []).join(', ');
       const budget = answers.budget || 'mid-range';
@@ -464,7 +491,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
       fetch(`${WORKER_URL}/itinerary`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ traveller, dest, duration, pace, vibes, budget, from })
+        body: JSON.stringify({ traveller, dest, duration, pace, vibes, budget, from, month })
       })
       .then(r => r.json())
       .then(data => {
