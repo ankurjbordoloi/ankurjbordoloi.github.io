@@ -7,79 +7,156 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0f0f0f; font-family: 'Jost', sans-serif; font-weight: 300; color: #f0ead6; min-height: 100vh; }
-    .q-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 0.5px solid rgba(212,175,55,0.2); gap: 1rem; }
+
+    :root {
+      --bg:        #faf8f4;
+      --bg-warm:   #f3ede4;
+      --bg-card:   #ffffff;
+      --text:      #1a1612;
+      --text-mid:  #6b5f52;
+      --text-muted:#a09485;
+      --gold:      #c8992a;
+      --gold-light:rgba(200,153,42,0.1);
+      --gold-line: rgba(200,153,42,0.25);
+      --border:    rgba(26,22,18,0.1);
+      --shadow:    0 2px 20px rgba(26,22,18,0.06);
+    }
+
+    body { background: var(--bg); font-family: 'Jost', sans-serif; font-weight: 300; color: var(--text); min-height: 100vh; }
+
+    /* NAV */
+    .q-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 1.75rem;
+      border-bottom: 0.5px solid var(--border);
+      background: rgba(250,248,244,0.95);
+      backdrop-filter: blur(10px);
+      position: sticky; top: 0; z-index: 10;
+      gap: 1rem;
+    }
+    .q-nav-logo { text-decoration: none; display: flex; align-items: center; gap: 12px; }
+    .q-nav-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; color: var(--text); letter-spacing: 7px; text-transform: uppercase; line-height: 1; }
+    .q-nav-tagline { font-size: 8px; letter-spacing: 3.5px; text-transform: uppercase; color: var(--gold); font-family: 'Jost', sans-serif; font-weight: 300; margin-top: 3px; }
     .q-progress-wrap { flex: 1; min-width: 0; }
-    .q-progress-bar { height: 1px; background: rgba(212,175,55,0.15); border-radius: 1px; overflow: hidden; }
-    .q-progress-fill { height: 100%; background: #d4af37; transition: width 0.4s ease; }
-    .q-progress-label { font-size: 11px; color: #4a4538; letter-spacing: 1px; margin-top: 4px; text-align: right; }
+    .q-progress-bar { height: 1px; background: var(--border); border-radius: 1px; overflow: hidden; }
+    .q-progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
+    .q-progress-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; margin-top: 4px; text-align: right; }
+
+    /* MAIN */
     .q-main { min-height: calc(100vh - 65px); display: flex; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; }
     .q-card { width: 100%; max-width: 560px; }
-    .q-step-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #d4af37; margin-bottom: 1rem; }
-    .q-question { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 6vw, 36px); font-weight: 300; color: #f5edd8; line-height: 1.2; margin-bottom: 1.75rem; }
-    .q-multi-hint { font-size: 11px; color: #4a4538; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.75rem; }
+
+    /* QUESTION */
+    .q-step-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .q-question { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 6vw, 36px); font-weight: 300; color: var(--text); line-height: 1.2; margin-bottom: 1.75rem; }
+    .q-multi-hint { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.75rem; }
+
+    /* OPTIONS */
     .q-options { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.75rem; }
-    .q-option { background: transparent; border: 0.5px solid rgba(212,175,55,0.25); color: #c8bfa0; padding: 0.9rem 1.25rem; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300; letter-spacing: 0.5px; cursor: pointer; border-radius: 2px; text-align: left; transition: all 0.2s; display: flex; align-items: center; gap: 0.75rem; min-height: 48px; }
-    .q-option:hover { border-color: #d4af37; color: #f5edd8; background: rgba(212,175,55,0.05); }
-    .q-option.selected { border-color: #d4af37; color: #f5edd8; background: rgba(212,175,55,0.08); }
-    .q-option-dot { width: 6px; height: 6px; border-radius: 50%; border: 0.5px solid rgba(212,175,55,0.4); flex-shrink: 0; transition: background 0.2s; }
-    .q-option.selected .q-option-dot { background: #d4af37; border-color: #d4af37; }
-    .q-input { background: transparent; border: 0.5px solid rgba(212,175,55,0.25); color: #f5edd8; padding: 0.9rem 1.25rem; font-family: 'Jost', sans-serif; font-size: 16px; font-weight: 300; width: 100%; border-radius: 2px; margin-bottom: 1.5rem; outline: none; }
-    .q-input:focus { border-color: #d4af37; }
-    .q-input::placeholder { color: #4a4538; }
+    .q-option {
+      background: var(--bg-card); border: 0.5px solid var(--border);
+      color: var(--text-mid); padding: 0.9rem 1.25rem;
+      font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300;
+      letter-spacing: 0.5px; cursor: pointer; border-radius: 3px;
+      text-align: left; transition: all 0.2s;
+      display: flex; align-items: center; gap: 0.75rem; min-height: 48px;
+      box-shadow: var(--shadow);
+    }
+    .q-option:hover { border-color: var(--gold); color: var(--text); background: #fff; }
+    .q-option.selected { border-color: var(--gold); color: var(--text); background: #fff; border-left: 2px solid var(--gold); }
+    .q-option-dot { width: 6px; height: 6px; border-radius: 50%; border: 0.5px solid var(--border); flex-shrink: 0; transition: background 0.2s; }
+    .q-option.selected .q-option-dot { background: var(--gold); border-color: var(--gold); }
+
+    /* INPUTS */
+    .q-input {
+      background: var(--bg-card); border: 0.5px solid var(--border);
+      color: var(--text); padding: 0.9rem 1.25rem;
+      font-family: 'Jost', sans-serif; font-size: 16px; font-weight: 300;
+      width: 100%; border-radius: 3px; margin-bottom: 1.5rem; outline: none;
+      box-shadow: var(--shadow);
+    }
+    .q-input:focus { border-color: var(--gold); }
+    .q-input::placeholder { color: var(--text-muted); }
+
+    /* ACTIONS */
     .q-actions { display: flex; justify-content: space-between; align-items: center; }
-    .q-btn-next { background: #d4af37; color: #0f0f0f; border: none; padding: 14px 32px; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.2s; min-height: 48px; }
-    .q-btn-next:hover { background: #c9a227; }
-    .q-btn-next:disabled { background: rgba(212,175,55,0.2); color: #4a4538; cursor: not-allowed; }
-    .q-btn-back { background: transparent; border: none; color: #4a4538; font-family: 'Jost', sans-serif; font-size: 13px; letter-spacing: 1px; cursor: pointer; padding: 14px 0; transition: color 0.2s; min-height: 48px; }
-    .q-btn-back:hover { color: #d4af37; }
-    .r-wrap { width: 100%; max-width: 620px; }
-    .r-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #d4af37; margin-bottom: 1rem; }
-    .r-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 7vw, 38px); font-weight: 300; color: #f5edd8; margin-bottom: 0.4rem; line-height: 1.15; }
-    .r-subtitle { font-size: 13px; color: #6e6757; margin-bottom: 1.75rem; letter-spacing: 0.5px; }
-    .r-glimpse { border: 0.5px solid rgba(212,175,55,0.2); border-radius: 2px; margin-bottom: 1.25rem; overflow: hidden; }
-    .r-glimpse-header { background: rgba(212,175,55,0.08); padding: 0.875rem 1.25rem; border-bottom: 0.5px solid rgba(212,175,55,0.15); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-    .r-glimpse-label { font-size: 11px; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; }
-    .r-glimpse-badge { font-size: 10px; color: #4a4538; letter-spacing: 1px; text-transform: uppercase; background: rgba(212,175,55,0.06); padding: 3px 10px; border: 0.5px solid rgba(212,175,55,0.15); border-radius: 2px; white-space: nowrap; }
+    .q-btn-next {
+      background: var(--gold); color: #fff; border: none;
+      padding: 14px 32px; font-family: 'Jost', sans-serif; font-size: 13px;
+      font-weight: 500; letter-spacing: 2px; text-transform: uppercase;
+      cursor: pointer; border-radius: 2px; transition: background 0.2s; min-height: 48px;
+    }
+    .q-btn-next:hover { background: #b8881f; }
+    .q-btn-next:disabled { background: var(--border); color: var(--text-muted); cursor: not-allowed; }
+    .q-btn-back {
+      background: transparent; border: none; color: var(--text-muted);
+      font-family: 'Jost', sans-serif; font-size: 13px; letter-spacing: 1px;
+      cursor: pointer; padding: 14px 0; transition: color 0.2s; min-height: 48px;
+    }
+    .q-btn-back:hover { color: var(--gold); }
+
+    /* RESULT */
+    .r-wrap { width: 100%; max-width: 640px; }
+    .r-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; }
+    .r-tag::before { content: ''; display: block; width: 20px; height: 0.5px; background: var(--gold); }
+    .r-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 7vw, 38px); font-weight: 300; color: var(--text); margin-bottom: 0.4rem; line-height: 1.15; }
+    .r-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 1.75rem; letter-spacing: 0.5px; }
+
+    /* GLIMPSE */
+    .r-glimpse { border: 0.5px solid var(--border); border-top: 2px solid var(--gold); border-radius: 3px; margin-bottom: 1.25rem; overflow: hidden; background: var(--bg-card); box-shadow: var(--shadow); }
+    .r-glimpse-header { background: var(--bg-warm); padding: 0.875rem 1.25rem; border-bottom: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .r-glimpse-label { font-size: 11px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+    .r-glimpse-badge { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; background: var(--bg); padding: 3px 10px; border: 0.5px solid var(--border); border-radius: 2px; white-space: nowrap; }
     .r-glimpse-body { padding: 1.25rem 1.25rem 0; }
-    .r-glimpse-text { font-size: 14px; color: #a89f87; line-height: 1.9; white-space: pre-wrap; }
-    .r-glimpse-fade { height: 80px; background: linear-gradient(transparent, #0f0f0f); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 1rem; text-align: center; }
-    .r-glimpse-more { font-size: 12px; color: #4a4538; letter-spacing: 1.5px; text-transform: uppercase; text-align: center; width: 100%; display: block; }
-    .r-email-box { border: 0.5px solid rgba(212,175,55,0.25); border-radius: 2px; padding: 1.25rem; margin-bottom: 1rem; }
-    .r-email-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: #f5edd8; margin-bottom: 0.4rem; }
-    .r-email-hint { font-size: 13px; color: #6e6757; margin-bottom: 1rem; line-height: 1.6; }
+    .r-glimpse-text { font-size: 14px; color: var(--text-mid); line-height: 1.9; white-space: pre-wrap; }
+    .r-glimpse-fade { height: 80px; background: linear-gradient(transparent, var(--bg-card)); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 1rem; }
+    .r-glimpse-more { font-size: 12px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; text-align: center; width: 100%; display: block; }
+
+    /* EMAIL BOX */
+    .r-email-box { border: 0.5px solid var(--border); border-radius: 3px; padding: 1.25rem; margin-bottom: 1rem; background: var(--bg-card); box-shadow: var(--shadow); }
+    .r-email-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--text); margin-bottom: 0.4rem; }
+    .r-email-hint { font-size: 13px; color: var(--text-mid); margin-bottom: 1rem; line-height: 1.6; }
     .r-row { display: flex; gap: 0.75rem; }
-    .r-input { background: transparent; border: 0.5px solid rgba(212,175,55,0.25); color: #f5edd8; padding: 12px 1rem; font-family: 'Jost', sans-serif; font-size: 16px; border-radius: 2px; outline: none; width: 100%; min-height: 48px; }
-    .r-input:focus { border-color: #d4af37; }
-    .r-input::placeholder { color: #4a4538; }
-    .r-btn-gold { background: #d4af37; color: #0f0f0f; border: none; padding: 12px 20px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; border-radius: 2px; white-space: nowrap; transition: background 0.2s; min-height: 48px; }
-    .r-btn-gold:hover { background: #c9a227; }
-    .r-sent { font-size: 12px; color: #d4af37; letter-spacing: 1px; margin-top: 0.75rem; display: none; }
+    .r-input { background: var(--bg); border: 0.5px solid var(--border); color: var(--text); padding: 12px 1rem; font-family: 'Jost', sans-serif; font-size: 16px; border-radius: 2px; outline: none; width: 100%; min-height: 48px; }
+    .r-input:focus { border-color: var(--gold); }
+    .r-input::placeholder { color: var(--text-muted); }
+    .r-btn-gold { background: var(--gold); color: #fff; border: none; padding: 12px 20px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; border-radius: 2px; white-space: nowrap; transition: background 0.2s; min-height: 48px; }
+    .r-btn-gold:hover { background: #b8881f; }
+    .r-sent { font-size: 12px; color: var(--gold); letter-spacing: 1px; margin-top: 0.75rem; display: none; }
+
+    /* DIVIDER */
     .r-divider { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; }
-    .r-divider-line { flex: 1; height: 0.5px; background: rgba(212,175,55,0.12); }
-    .r-divider-text { font-size: 11px; color: #4a4538; letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
-    .r-premium { border: 0.5px solid rgba(212,175,55,0.4); border-radius: 2px; padding: 1.5rem 1.25rem; background: rgba(212,175,55,0.03); }
+    .r-divider-line { flex: 1; height: 0.5px; background: var(--border); }
+    .r-divider-text { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
+
+    /* PREMIUM */
+    .r-premium { border: 0.5px solid var(--gold-line); border-top: 2px solid var(--gold); border-radius: 3px; padding: 1.5rem 1.25rem; background: var(--bg-card); box-shadow: var(--shadow); }
     .r-premium-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; }
-    .r-premium-badge { font-size: 10px; color: #d4af37; letter-spacing: 2px; text-transform: uppercase; background: rgba(212,175,55,0.1); border: 0.5px solid rgba(212,175,55,0.3); padding: 4px 12px; border-radius: 2px; flex-shrink: 0; }
-    .r-premium-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: #f5edd8; margin-bottom: 0.4rem; }
-    .r-premium-sub { font-size: 13px; color: #6e6757; }
+    .r-premium-badge { font-size: 10px; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; background: var(--gold-light); border: 0.5px solid var(--gold-line); padding: 4px 12px; border-radius: 2px; flex-shrink: 0; }
+    .r-premium-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--text); margin-bottom: 0.4rem; }
+    .r-premium-sub { font-size: 13px; color: var(--text-mid); }
     .r-perks { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .r-perk { display: flex; align-items: center; gap: 0.6rem; font-size: 13px; color: #a89f87; }
-    .r-perk-dot { width: 4px; height: 4px; border-radius: 50%; background: #d4af37; flex-shrink: 0; }
+    .r-perk { display: flex; align-items: center; gap: 0.6rem; font-size: 13px; color: var(--text-mid); }
+    .r-perk-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+    /* FORM */
     .r-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
     .r-form-full { margin-bottom: 0.75rem; }
-    .r-label { font-size: 11px; color: #4a4538; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.4rem; display: block; }
-    .r-select { width: 100%; background: #0f0f0f; border: 0.5px solid rgba(212,175,55,0.25); color: #c8bfa0; padding: 12px 1rem; font-family: 'Jost', sans-serif; font-size: 16px; border-radius: 2px; outline: none; appearance: none; cursor: pointer; min-height: 48px; }
-    .r-select:focus { border-color: #d4af37; }
-    .r-book-sent { font-size: 12px; color: #d4af37; letter-spacing: 1px; margin-top: 0.75rem; display: none; line-height: 1.6; }
-    .r-restart { font-size: 12px; color: #4a4538; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; border: none; background: none; font-family: 'Jost', sans-serif; margin-top: 1.5rem; display: block; transition: color 0.2s; padding: 0.5rem 0; }
-    .r-restart:hover { color: #d4af37; }
-    .r-loading { display: flex; align-items: center; gap: 0.75rem; color: #4a4538; font-size: 13px; letter-spacing: 1px; }
+    .r-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.4rem; display: block; }
+    .r-select { width: 100%; background: var(--bg); border: 0.5px solid var(--border); color: var(--text-mid); padding: 12px 1rem; font-family: 'Jost', sans-serif; font-size: 16px; border-radius: 2px; outline: none; appearance: none; cursor: pointer; min-height: 48px; }
+    .r-select:focus { border-color: var(--gold); }
+    .r-book-sent { font-size: 12px; color: var(--gold); letter-spacing: 1px; margin-top: 0.75rem; display: none; line-height: 1.6; }
+    .r-restart { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; cursor: pointer; border: none; background: none; font-family: 'Jost', sans-serif; margin-top: 1.5rem; display: block; transition: color 0.2s; padding: 0.5rem 0; }
+    .r-restart:hover { color: var(--gold); }
+
+    /* LOADING */
+    .r-loading { display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted); font-size: 13px; letter-spacing: 1px; }
     .r-dot-anim { display: flex; gap: 4px; }
-    .r-dot-anim span { width: 4px; height: 4px; background: #d4af37; border-radius: 50%; animation: dp 1.2s ease-in-out infinite; }
+    .r-dot-anim span { width: 4px; height: 4px; background: var(--gold); border-radius: 50%; animation: dp 1.2s ease-in-out infinite; }
     .r-dot-anim span:nth-child(2) { animation-delay: 0.2s; }
     .r-dot-anim span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes dp { 0%,80%,100%{opacity:.2;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
+
     @media (max-width: 520px) {
       .q-main { padding: 2rem 1.25rem; align-items: flex-start; padding-top: 2.5rem; }
       .r-row { flex-direction: column; }
@@ -92,24 +169,24 @@
 <body>
 
   <nav class="q-nav">
-    <a href="index.html" style="text-decoration:none; display:flex; align-items:center; gap:12px;">
-      <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 6 C10 6 6 10 6 18 C6 26 10 30 18 30 C26 30 30 26 30 18 C30 10 26 6 18 6Z" stroke="#d4af37" stroke-width="0.75" fill="none"/>
-        <path d="M18 6 C14 10 12 14 12 18 C12 22 14 26 18 30" stroke="#d4af37" stroke-width="0.75" fill="none"/>
-        <path d="M18 6 C22 10 24 14 24 18 C24 22 22 26 18 30" stroke="rgba(212,175,55,0.5)" stroke-width="0.5" fill="none"/>
-        <path d="M7 12 L29 12" stroke="rgba(212,175,55,0.3)" stroke-width="0.5"/>
-        <path d="M7 24 L29 24" stroke="rgba(212,175,55,0.3)" stroke-width="0.5"/>
-        <path d="M6 18 L30 18" stroke="rgba(212,175,55,0.25)" stroke-width="0.5"/>
-        <circle cx="18" cy="18" r="1.5" fill="#d4af37"/>
+    <a href="index.html" class="q-nav-logo">
+      <svg width="26" height="26" viewBox="0 0 36 36" fill="none">
+        <path d="M18 6 C10 6 6 10 6 18 C6 26 10 30 18 30 C26 30 30 26 30 18 C30 10 26 6 18 6Z" stroke="#c8992a" stroke-width="0.75" fill="none"/>
+        <path d="M18 6 C14 10 12 14 12 18 C12 22 14 26 18 30" stroke="#c8992a" stroke-width="0.75" fill="none"/>
+        <path d="M18 6 C22 10 24 14 24 18 C24 22 22 26 18 30" stroke="rgba(200,153,42,0.5)" stroke-width="0.5" fill="none"/>
+        <path d="M7 12 L29 12" stroke="rgba(200,153,42,0.3)" stroke-width="0.5"/>
+        <path d="M7 24 L29 24" stroke="rgba(200,153,42,0.3)" stroke-width="0.5"/>
+        <path d="M6 18 L30 18" stroke="rgba(200,153,42,0.25)" stroke-width="0.5"/>
+        <circle cx="18" cy="18" r="1.5" fill="#c8992a"/>
       </svg>
       <div>
-        <div style="font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; color:#f5edd8; letter-spacing:7px; text-transform:uppercase; line-height:1;">Wandr</div>
-        <div style="font-size:8px; letter-spacing:3.5px; text-transform:uppercase; color:rgba(212,175,55,0.55); font-family:'Jost',sans-serif; font-weight:300;">Curated travel</div>
+        <div class="q-nav-wordmark">Wandr</div>
+        <div class="q-nav-tagline">Curated travel</div>
       </div>
     </a>
     <div class="q-progress-wrap">
       <div class="q-progress-bar"><div class="q-progress-fill" id="progressFill" style="width:0%"></div></div>
-      <div class="q-progress-label" id="progressLabel">Step 1 of 7</div>
+      <div class="q-progress-label" id="progressLabel">Step 1 of 8</div>
     </div>
   </nav>
 
@@ -122,7 +199,7 @@
   </div>
 
   <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
     const WORKER_URL = 'https://wandr-backend.ankurjbordoloi.workers.dev';
 
     const questions = [
@@ -178,7 +255,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
           `</div>`;
       } else if (q.type === 'dropdown') {
         const opts = q.getOptions();
-        optionsHtml = `<select class="q-input r-select" id="dropdownInput" onchange="answers['${q.id}']=this.value; updateNextDropdown()" style="cursor:pointer;">
+        optionsHtml = `<select class="q-input" id="dropdownInput" onchange="answers['${q.id}']=this.value; updateNextDropdown()" style="cursor:pointer; appearance:none;">
           <option value="" disabled ${!saved ? 'selected' : ''}>Select a month...</option>
           ${opts.map(o => `<option value="${o}" ${saved === o ? 'selected' : ''}>${o}</option>`).join('')}
         </select>`;
@@ -287,33 +364,20 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
         alert('Please enter a valid email address.');
         return;
       }
-
       btn.textContent = 'Sending...';
       btn.disabled = true;
-
       const dest = answers.destination_name || 'a destination we recommend for you';
       const traveller = answers.traveller_type || 'traveller';
       const duration = answers.duration || 'a week';
       const pace = answers.pace || 'balanced';
       const vibes = (answers.vibe || []).join(', ');
       const budget = answers.budget || 'mid-range';
-
       try {
         await fetch(`${WORKER_URL}/email`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email,
-            traveller,
-            dest,
-            duration,
-            pace,
-            vibes,
-            budget,
-            itinerary: window._fullItinerary || 'Your full itinerary is being prepared.'
-          })
+          body: JSON.stringify({ email, traveller, dest, duration, pace, vibes, budget, itinerary: window._fullItinerary || 'Your full itinerary is being prepared.' })
         });
-
         await fetch(SCRIPT_URL, {
           method: 'POST',
           mode: 'no-cors',
@@ -325,8 +389,8 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
             'Travelling As': answers.traveller_type || '',
             'Travelling From': answers.travelling_from || '',
             'Has Destination': answers.destination || '',
-            'Destination': answers.destination_name 
-              ? answers.destination_name.trim().toUpperCase() 
+            'Destination': answers.destination_name
+              ? answers.destination_name.trim().toUpperCase()
               : (window._recommendedDest ? window._recommendedDest.toUpperCase() : 'Undecided'),
             'Duration': answers.duration || '',
             'Travel Month': answers.travel_month || '',
@@ -336,7 +400,6 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
             'Email': email
           })
         });
-
         document.getElementById('emailSent').style.display = 'block';
         btn.textContent = 'Sent';
       } catch(e) {
@@ -404,11 +467,11 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
 
       main.style.alignItems = 'flex-start';
       main.style.paddingTop = '2.5rem';
-      
+
       main.innerHTML = `
         <div class="r-wrap">
           <div class="r-tag">Your personalised itinerary</div>
-          <div class="r-title">${dest ? `Your trip to <span style="color:#d4af37">${dest}</span>` : `Your <span style="color:#d4af37">personalised</span> itinerary`}</div>
+          <div class="r-title">${dest ? `Your trip to <span style="color:var(--gold)">${dest}</span>` : `Your <span style="color:var(--gold)">personalised</span> itinerary`}</div>
           <div class="r-subtitle">${traveller} · ${duration} · ${pace.split('—')[0].trim()}</div>
           <div class="r-glimpse">
             <div class="r-glimpse-header">
@@ -429,7 +492,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
             <div class="r-email-hint">We'll send your complete day-by-day plan, curated tips, and local recommendations straight to your inbox.</div>
             <div class="r-row">
               <input class="r-input" id="emailInput" type="email" placeholder="your@email.com" />
-              <button class="r-btn-gold" id="emailBtn" onclick="submitEmail(this)" disabled style="background:rgba(212,175,55,0.2); color:#4a4538; cursor:not-allowed;">Send it</button>
+              <button class="r-btn-gold" id="emailBtn" onclick="submitEmail(this)" disabled style="background:var(--border); color:var(--text-muted); cursor:not-allowed;">Send it</button>
             </div>
             <div class="r-sent" id="emailSent">✓ Your full itinerary is on its way.</div>
           </div>
@@ -498,17 +561,15 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
       .then(data => {
         if (data.error === 'invalid_destination') {
           document.getElementById('glimpseText').innerHTML = `
-            <div style="font-size:14px; color:#a89f87; line-height:1.7;">
-              <p style="margin:0;">We couldn't recognise <span style="color:#d4af37;">${dest}</span> as a destination — this could be a typo or an unfamiliar place name.</p>
-              <p style="margin:0;"><span style="color:#d4af37; cursor:pointer; text-decoration:underline;" onclick="restartFlow()">← Try again with a different destination</span></p>
+            <div style="font-size:14px; color:var(--text-mid); line-height:1.7;">
+              <p style="margin:0 0 0.75rem;">We couldn't recognise <span style="color:var(--gold);">${dest}</span> as a destination — this could be a typo or an unfamiliar place name.</p>
+              <p style="margin:0 0 0.75rem;"><span style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="restartFlow()">← Try again with a different destination</span></p>
               <p style="margin:0;">Or if you're looking for something offbeat or unconventional, our travel consultant can help — just fill in the form below.</p>
             </div>`;
           return;
         }
         window._fullItinerary = data.itinerary || '';
-        if (data.recommended_dest) {
-          window._recommendedDest = data.recommended_dest;
-        }
+        if (data.recommended_dest) window._recommendedDest = data.recommended_dest;
         const cleaned = window._fullItinerary
           .replace(/#{1,6}\s/g, '')
           .replace(/\*\*(.*?)\*\*/g, '$1')
@@ -518,7 +579,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjY
         const lines = cleaned.split('\n').filter(l => l.trim());
         document.getElementById('glimpseText').textContent = lines.slice(0, 4).join('\n');
         const emailBtn = document.getElementById('emailBtn');
-        if (emailBtn) { emailBtn.disabled = false; emailBtn.style.background = '#d4af37'; emailBtn.style.color = '#0f0f0f'; emailBtn.style.cursor = 'pointer'; }
+        if (emailBtn) { emailBtn.disabled = false; emailBtn.style.background = 'var(--gold)'; emailBtn.style.color = '#fff'; emailBtn.style.cursor = 'pointer'; }
       })
       .catch(() => {
         document.getElementById('glimpseText').textContent = 'Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...\n\nDay 2: Head out early to beat the crowds at the most iconic sight in the city. Afternoon free for wandering — follow your instincts rather than the map.';
