@@ -380,7 +380,17 @@
         await fetch(`${WORKER_URL}/email`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, traveller, dest, duration, pace, vibes, budget, itinerary: window._fullItinerary || 'Your full itinerary is being prepared.' })
+          body: JSON.stringify({
+          email,
+          traveller,
+          dest,
+          duration,
+          pace,
+          vibes,
+          budget,
+          itinerary: window._fullItinerary || 'Your full itinerary is being prepared.',
+          recommended_dest: window._recommendedDest || ''
+        })
         });
         await fetch(SCRIPT_URL, {
           method: 'POST',
