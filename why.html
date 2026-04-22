@@ -545,16 +545,17 @@
   </footer>
 
   <script>
+    const WORKER_URL = 'https://wandr-backend.ankurjbordoloi.workers.dev';
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzeMptXpyVdRRIg9jjYxJcyR0jyap2bkUAE_uXGPo9wL_-XKFo05E_I5cZLws_ixPmUg/exec';
 
     async function submitConsultation() {
-      const lastSubmit = localStorage.getItem('wandr_last_submit');
+      const lastSubmit = localStorage.getItem('wandr_last_consult');
       if (lastSubmit && Date.now() - lastSubmit < 60000) {
         alert('Please wait a moment before submitting again.');
         return;
       }
       if (document.getElementById('hpot').value !== '') return;
-      localStorage.setItem('wandr_last_submit', Date.now());
+      localStorage.setItem('wandr_last_consult', Date.now());
       const name = document.getElementById('cName').value.trim();
       const email = document.getElementById('cEmail').value.trim();
       const wa = document.getElementById('cWA').value.trim();
