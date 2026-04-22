@@ -584,6 +584,18 @@
             'Notes': note
           })
         });
+        await fetch(`${WORKER_URL}/consultation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          wa,
+          time,
+          dest,
+          note
+        })
+      });
         document.getElementById('cConfirm').style.display = 'block';
         btn.textContent = 'Request sent';
       } catch(err) {
