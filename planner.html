@@ -354,12 +354,12 @@
     }
 
     async function submitEmail(btn) {
-      const lastSubmit = localStorage.getItem('wandr_last_submit');
+      const lastSubmit = localStorage.getItem('wandr_last_email');
       if (lastSubmit && Date.now() - lastSubmit < 60000) {
         alert('Please wait a moment before submitting again.');
         return;
       }
-      localStorage.setItem('wandr_last_submit', Date.now());
+      localStorage.setItem('wandr_last_email', Date.now());
       if (document.getElementById('hpot').value !== '') return;
       const emailInput = document.getElementById('emailInput');
       if (!emailInput) return;
