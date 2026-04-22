@@ -288,11 +288,15 @@
     }
 
     function selectSingle(id, el, val) {
-      answers[id] = val;
-      document.querySelectorAll('.q-option').forEach(b => b.classList.remove('selected'));
-      el.classList.add('selected');
-      document.getElementById('btnNext').disabled = false;
+    answers[id] = val;
+    // Clear destination_name if user switches to "No"
+    if (id === 'destination' && val === 'No, surprise me with a recommendation') {
+      answers.destination_name = '';
     }
+    document.querySelectorAll('.q-option').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('btnNext').disabled = false;
+  }
 
     function selectMulti(id, el, val) {
       if (!answers[id]) answers[id] = [];
