@@ -24,14 +24,15 @@ An AI-powered travel planning website with two paths: a free AI itinerary genera
 ## Pages
 
 ### index.html — Landing page
-1. Nav: Globe SVG logo + "Wandr" wordmark + "Curated travel" tagline. Fixed with blur backdrop, shadow on scroll.
+1. Nav: Compass logo (wandr_logo_new_notext.png) + "Wandr" wordmark + "Curated travel" tagline. Sticky with blur backdrop.
 2. Hero: Full-bleed travel photo with dark overlay. "Your trip. Planned around you." No buttons.
 3. Two-path cards: AI planner (free) + Personal consultation (first session free)
 4. Photo strip: Japan, Dubai, Spain
-5. Features (3 columns) — white cards with gold top border. Feature body in burnt brown (#6b3f2a)
+5. Features (3 columns) — white cards with gold top border
 6. How it works (4 steps)
 7. CTA — full-bleed photo
 8. Footer — dark background
+9. Favicon: wandr_logo_new_notext.png
 
 ### planner.html — Questionnaire + itinerary
 9-question flow (8 if destination = No):
@@ -45,10 +46,15 @@ An AI-powered travel planning website with two paths: a free AI itinerary genera
 8. What kind of experiences excite you? (multi select)
 9. What is your travel budget like? (single select)
 
+Nav: Identical to index.html and why.html — compass logo + wordmark + nav links.
+Progress bar: Thin 2px gold bar below the nav (separate from nav), disappears on Generate, reappears on restart.
+
 On Generate:
 - Answers logged to Sheet 2
+- Progress bar hides
 - If user typed destination then switched to "No", destination_name is cleared
-- AI itinerary generated via Worker, markdown stripped, 4-line preview shown
+- AI itinerary generated via Worker, markdown stripped
+- Itinerary shown as paywall-style blur overlay — email input embedded inside glimpse card
 - Send it button disabled until itinerary loads
 
 On Send it:
@@ -56,24 +62,29 @@ On Send it:
 - Second row written to Sheet 2 with email + recommended destination
 - Email title for undecided: "Your trip to a destination we recommend for you"
 
+Consultation section:
+- Divider: "Not sure yet? Talk to a travel expert!"
+- Badge changed from "Premium" to "First session free"
+
 ### why.html — Consultant page
 - Full-bleed hero photo
-- Consultant bio with stat cards (25 countries, 5 continents)
-- "A" avatar placeholder — replace with photo post-MVP
+- Consultant bio with Ankur's real photo (ankur.jpg), stat cards (25 countries, 5 continents)
 - Instagram link, destination tags by region
 - What a session covers (6 cards), who it's for (2 cards)
 - Comparison table, CTA photo section
 - Consultation booking form → Sheet 1
+- Favicon: wandr_logo_new_notext.png
 
 ---
 
 ## Design
 - **Theme:** Bright and airy — #faf8f4 bg, #f3ede4 sections, white cards
 - **Accent:** Gold (#c8992a)
-- **Text:** #1a1612, #6b5f52, #a09485; feature body #6b3f2a
+- **Text:** #1a1612, #6b5f52, #a09485
 - **Cards:** White, 2px gold top border, subtle shadow
 - **Fonts:** Cormorant Garamond (serif) + Jost (sans, weight 300)
-- **Logo:** Globe SVG + wordmark (Wandr_Logo.png paper plane ready for post-MVP)
+- **Logo:** wandr_logo_new_notext.png — compass star mark with calligraphic W (from Adobe Firefly). Used in nav on all 3 pages and as favicon.
+- **Nav:** Identical across all 3 pages — sticky, blur backdrop, compass logo + WANDR wordmark (21px Cormorant Garamond, letter-spacing 7px) + "Curated travel" tagline (gold, 8px Jost) + Home / Why Wandr links
 - **Animations:** Scroll fade-in, hero zoom on load
 - **Photos:** Unsplash (safe for commercial use, no attribution needed)
 
@@ -83,7 +94,7 @@ On Send it:
 
 - `POST /itinerary` — Anthropic API → returns itinerary + recommended_dest
 - `POST /email` — sends itinerary email via Resend
-- `POST /consultation` — sends consultation confirmation email via Resend
+- `POST /consultation` — sends consultation confirmation email + notification to ankur@wandrplan.com via Resend
 
 Security: CORS (wandrplan.com only), origin validation, 20 req/hour/IP rate limit
 
@@ -121,7 +132,9 @@ Booking lead time:
 
 ## Emails — Unified Light Theme
 
-Both emails: #faf8f4 bg, dark brown logo, gold tagline, #6b5f52 body text, #c8992a CTA button
+Both emails: #faf8f4 bg, compass logo image + WANDR wordmark + gold tagline (shared LOGO_BLOCK constant in Worker), #6b5f52 body text, #c8992a CTA button.
+
+Logo in emails: hosted at https://raw.githubusercontent.com/ankurjbordoloi/ankurjbordoloi.github.io/main/wandr_logo_new_notext.png
 
 ### Itinerary email
 - Subject: "Your [DEST] itinerary is ready" / "Your personalised itinerary is ready"
@@ -133,6 +146,12 @@ Both emails: #faf8f4 bg, dark brown logo, gold tagline, #6b5f52 body text, #c899
 - Title: "We've received your request, [Name]." (auto title-cased)
 - What happens next + prep checklist + Wandr Team sign-off
 - CTA → why.html
+
+### Ankur notification email (internal)
+- Fires instantly when consultation form is submitted (from planner.html or why.html)
+- Sent to: ankur@wandrplan.com
+- Subject: "New consultation request — [Name]"
+- Contains: name, email (clickable), WhatsApp, preferred time, destination, note
 
 ---
 
@@ -147,6 +166,14 @@ Form field values:
 - `'Why Page - Consultation'` → Sheet 1
 
 Apps Script: secret token `wandr2026secure`, honeypot, 20/hour rate limit
+
+---
+
+## Email Setup (Gmail)
+- hello@wandrplan.com → forwards to ankurjbordoloi@gmail.com via Cloudflare Email Routing
+- ankur@wandrplan.com → forwards to ankurjbordoloi@gmail.com via Cloudflare Email Routing
+- Both addresses set up as "Send mail as" in Gmail via Gmail SMTP + App Password
+- Gmail filter: emails to hello@wandrplan.com → labelled "Wandr"
 
 ---
 
@@ -174,6 +201,7 @@ Apps Script: secret token `wandr2026secure`, honeypot, 20/hour rate limit
 - 4x A records → GitHub Pages (185.199.108-111.153)
 - CNAME www → ankurjbordoloi.github.io
 - MX + SPF + DKIM + DMARC → Resend
+- Cloudflare Email Routing enabled for hello@ and ankur@
 
 ---
 
@@ -193,20 +221,21 @@ Apps Script: secret token `wandr2026secure`, honeypot, 20/hour rate limit
 
 ## MVP Status
 - Live at wandrplan.com, closed group testing
-- LinkedIn soft-launch post drafted (cryptic, no URL yet)
+- LinkedIn soft-launch post drafted (cryptic, no URL yet) — not yet posted, finalising a few things first
 - Consultation confirmation email live
+- Ankur notification email live (fires on every consultation request)
 - 42+ submissions: 31% undecided, top dests: Italy, Japan, Malaysia, Maldives, Singapore, Spain, Switzerland, Thailand + domestic India
+- Ankur's real photo live on why.html
 
 ---
 
 ## Post-MVP Backlog
 - Own travel photos (replace Unsplash)
-- Ankur's photo in why.html bio
-- Logo swap to Wandr_Logo.png
+- Logo swap consideration — wandr_logo_new_notext.png currently in use, paper plane logo (Wandr_Logo.png) retired
 - Blog / travel stories
-- Sonnet 4.6 upgrade (web search for live flights)
+- Sonnet 4.6 upgrade (web search for live flights) — deferred, Haiku performing well for MVP
 - Brand rename consideration (pravasa.com, Itinera, Rovana)
-- Broader launch
+- Broader LinkedIn launch
 
 ---
 
