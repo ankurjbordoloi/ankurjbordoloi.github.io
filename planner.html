@@ -26,22 +26,20 @@
     body { background: var(--bg); font-family: 'Jost', sans-serif; font-weight: 300; color: var(--text); min-height: 100vh; }
 
     /* NAV */
-    .q-nav {
+    nav {
+      position: sticky; top: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1.25rem 1.75rem;
-      border-bottom: 0.5px solid var(--border);
+      padding: 1.25rem 2.5rem;
       background: rgba(250,248,244,0.95);
-      backdrop-filter: blur(10px);
-      position: sticky; top: 0; z-index: 10;
-      gap: 1rem;
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
     }
-    .q-nav-logo { text-decoration: none; display: flex; align-items: center; gap: 12px; }
-    .q-nav-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; color: var(--text); letter-spacing: 7px; text-transform: uppercase; line-height: 1; }
-    .q-nav-tagline { font-size: 8px; letter-spacing: 3.5px; text-transform: uppercase; color: var(--gold); font-family: 'Jost', sans-serif; font-weight: 300; margin-top: 3px; }
-    .q-progress-wrap { flex: 1; min-width: 0; }
-    .q-progress-bar { height: 1px; background: var(--border); border-radius: 1px; overflow: hidden; }
-    .q-progress-fill { height: 100%; background: var(--gold); transition: width 0.4s ease; }
-    .q-progress-label { font-size: 11px; color: var(--text-muted); letter-spacing: 1px; margin-top: 4px; text-align: right; }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; gap: 12px; }
+    .nav-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 400; color: var(--text); letter-spacing: 7px; text-transform: uppercase; line-height: 1; }
+    .nav-tagline { font-size: 8px; letter-spacing: 3.5px; text-transform: uppercase; color: var(--gold); font-family: 'Jost', sans-serif; font-weight: 300; margin-top: 3px; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); transition: color 0.2s; font-weight: 400; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
 
     /* MAIN */
     .q-main { min-height: calc(100vh - 65px); display: flex; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; }
@@ -164,20 +162,20 @@
 </head>
 <body>
 
-  <nav class="q-nav">
-    <a href="index.html" class="q-nav-logo" style="flex-shrink:0;">
+   <nav id="mainNav">
+    <a href="index.html" class="nav-logo">
       <img src="wandr_logo_new_notext.png" alt="Wandr" style="height:40px; width:auto;" />
       <div>
-        <div class="q-nav-wordmark">Wandr</div>
-        <div class="q-nav-tagline">Curated travel</div>
+        <div class="nav-wordmark">Wandr</div>
+        <div class="nav-tagline">Curated travel</div>
       </div>
     </a>
-    <div class="q-progress-wrap">
-      <div class="q-progress-bar"><div class="q-progress-fill" id="progressFill" style="width:0%"></div></div>
-      <div class="q-progress-label" id="progressLabel">Step 1 of 8</div>
-    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="why.html">Why Wandr</a></li>
+    </ul>
   </nav>
-
+  
   <input type="text" id="hpot" name="honeypot"
     style="display:none; position:absolute; left:-9999px;"
     tabindex="-1" autocomplete="off" />
