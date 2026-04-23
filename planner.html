@@ -25,7 +25,7 @@
 
     body { background: var(--bg); font-family: 'Jost', sans-serif; font-weight: 300; color: var(--text); min-height: 100vh; }
 
-    /* NAV */
+    /* NAV — identical to index.html and why.html */
     nav {
       position: sticky; top: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
@@ -41,8 +41,12 @@
     .nav-links a { text-decoration: none; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); transition: color 0.2s; font-weight: 400; }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
 
+    /* PROGRESS BAR */
+    #progressBar { height: 2px; background: var(--border); position: sticky; top: 65px; z-index: 99; }
+    #progressFill { height: 100%; background: var(--gold); width: 0%; transition: width 0.4s ease; }
+
     /* MAIN */
-    .q-main { min-height: calc(100vh - 65px); display: flex; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; }
+    .q-main { min-height: calc(100vh - 67px); display: flex; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; }
     .q-card { width: 100%; max-width: 560px; }
 
     /* QUESTION */
@@ -110,6 +114,7 @@
     .r-glimpse-text { font-size: 14px; color: var(--text-mid); line-height: 1.9; white-space: pre-wrap; }
     .r-glimpse-blur { position: relative; height: 240px; margin-top: -120px; background: linear-gradient(transparent 0%, rgba(255,255,255,0.5) 20%, rgba(255,255,255,0.88) 50%, #fff 75%); backdrop-filter: blur(3px); display: none; flex-direction: column; align-items: center; justify-content: flex-end; padding: 1.25rem; gap: 0.75rem; }
     @media (min-width: 521px) { .r-glimpse-blur { height: 200px; margin-top: -80px; } }
+    .r-glimpse-unlock { font-size: 12px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; text-align: center; }
     .r-row { display: flex; gap: 0.75rem; width: 100%; }
     .r-input { background: var(--bg); border: 0.5px solid var(--border); color: var(--text); padding: 12px 1rem; font-family: 'Jost', sans-serif; font-size: 16px; border-radius: 2px; outline: none; width: 100%; min-height: 48px; }
     .r-input:focus { border-color: var(--gold); }
@@ -152,6 +157,8 @@
     @keyframes dp { 0%,80%,100%{opacity:.2;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
 
     @media (max-width: 520px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.5rem; }
       .q-main { padding: 2rem 1.25rem; align-items: flex-start; padding-top: 2.5rem; }
       .r-row { flex-direction: column; }
       .r-btn-gold { width: 100%; }
@@ -162,7 +169,7 @@
 </head>
 <body>
 
-   <nav id="mainNav">
+  <nav id="mainNav">
     <a href="index.html" class="nav-logo">
       <img src="wandr_logo_new_notext.png" alt="Wandr" style="height:40px; width:auto;" />
       <div>
@@ -175,7 +182,11 @@
       <li><a href="why.html">Why Wandr</a></li>
     </ul>
   </nav>
-  
+
+  <div id="progressBar">
+    <div id="progressFill"></div>
+  </div>
+
   <input type="text" id="hpot" name="honeypot"
     style="display:none; position:absolute; left:-9999px;"
     tabindex="-1" autocomplete="off" />
@@ -226,7 +237,6 @@
       const q = visibleQuestions[current];
       const pct = Math.round((current / total) * 100);
       document.getElementById('progressFill').style.width = pct + '%';
-      document.getElementById('progressLabel').textContent = 'Step ' + (current + 1) + ' of ' + total;
       const card = document.getElementById('qCard');
       const saved = answers[q.id];
       let optionsHtml = '';
@@ -274,15 +284,14 @@
     }
 
     function selectSingle(id, el, val) {
-    answers[id] = val;
-    // Clear destination_name if user switches to "No"
-    if (id === 'destination' && val === 'No, surprise me with a recommendation') {
-      answers.destination_name = '';
+      answers[id] = val;
+      if (id === 'destination' && val === 'No, surprise me with a recommendation') {
+        answers.destination_name = '';
+      }
+      document.querySelectorAll('.q-option').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('btnNext').disabled = false;
     }
-    document.querySelectorAll('.q-option').forEach(b => b.classList.remove('selected'));
-    el.classList.add('selected');
-    document.getElementById('btnNext').disabled = false;
-  }
 
     function selectMulti(id, el, val) {
       if (!answers[id]) answers[id] = [];
@@ -367,16 +376,10 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-          email,
-          traveller,
-          dest,
-          duration,
-          pace,
-          vibes,
-          budget,
-          itinerary: window._fullItinerary || 'Your full itinerary is being prepared.',
-          recommended_dest: window._recommendedDest || ''
-        })
+            email, traveller, dest, duration, pace, vibes, budget,
+            itinerary: window._fullItinerary || 'Your full itinerary is being prepared.',
+            recommended_dest: window._recommendedDest || ''
+          })
         });
         await fetch(SCRIPT_URL, {
           method: 'POST',
@@ -446,17 +449,14 @@
           })
         });
         await fetch(`${WORKER_URL}/consultation`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          wa,
-          time,
-          dest: answers.destination_name || 'not specified',
-          note
-        })
-      });
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name, email, wa, time,
+            dest: answers.destination_name || 'not specified',
+            note
+          })
+        });
         document.getElementById('bookSent').style.display = 'block';
         btn.textContent = 'Request sent';
       } catch(err) {
@@ -467,6 +467,8 @@
     }
 
     function showResult() {
+      document.getElementById('progressBar').style.display = 'none';
+
       const main = document.getElementById('qMain');
       const dest = answers.destination_name ? answers.destination_name.toUpperCase() : null;
       const traveller = answers.traveller_type || 'traveller';
@@ -596,6 +598,7 @@
     }
 
     function restartFlow() {
+      document.getElementById('progressBar').style.display = 'block';
       current = 0;
       answers = {};
       window._fullItinerary = '';
