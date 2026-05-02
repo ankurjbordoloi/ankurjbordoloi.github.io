@@ -724,6 +724,8 @@
 
   <script>
     // ── NEWSLETTER ──
+    let _nlPopupShown = false;
+
     async function subscribeEmail(email, source) {
       if (!email || !email.includes('@')) return false;
       try {
@@ -737,6 +739,8 @@
     }
 
     function showNlPopup(prefillEmail) {
+      if (_nlPopupShown) return;
+      _nlPopupShown = true;
       const input = document.getElementById('nlPopupEmail');
       if (prefillEmail) input.value = prefillEmail;
       document.getElementById('nlPopup').classList.add('active');
