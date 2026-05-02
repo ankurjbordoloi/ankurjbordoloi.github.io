@@ -654,7 +654,7 @@
         const blur = document.getElementById('glimpseBlur'); if (blur) blur.style.display = 'flex';
       })
       .catch(() => {
-        document.getElementById('glimpseText').textContent = 'Day 1: Arrive and settle in. Spend your first evening exploring the neighbourhood, finding a local spot for dinner and soaking in the atmosphere...\n\nDay 2: Head out early to beat the crowds at the most iconic sight in the city. Afternoon free for wandering — follow your instincts rather than the map.';
+        document.getElementById('glimpseText').innerHTML = `<div style="font-size:14px; color:var(--text-mid); line-height:1.8; padding:0.5rem 0;">Hmm, our AI seems to have stepped out for chai. ☕<br><br>We couldn't generate your itinerary right now — probably a temporary hiccup on our end. Give it a minute and try again, or come back shortly. Your trip isn't going anywhere (well, not yet).</div>`;
       });
     }
 
@@ -680,11 +680,16 @@
         <div class="footer-logo">Wandr</div>
         <div class="footer-text" style="margin-top:0.5rem;">Curated travel</div>
       </div>
-      <div class="footer-text" style="text-align:right;">
-        <div>&#169; 2026 Wandr. All rights reserved.</div>
-        <div>Built with intention.</div>
-        <div style="margin-top:0.5rem;">
-          <a href="https://instagram.com/ankurjbordoloi" target="_blank" style="color:var(--gold); text-decoration:none; font-size:12px; letter-spacing:0.5px;">Instagram ↗</a>
+      <div style="display:flex; align-items:flex-end; gap:2rem; flex-wrap:wrap; justify-content:flex-end;">
+        <div class="footer-text" style="text-align:right;">
+          <div>&#169; 2026 Wandr. All rights reserved.</div>
+          <div>Built with intention.</div>
+          <div style="margin-top:0.5rem;">
+            <a href="https://instagram.com/ankurjbordoloi" target="_blank" style="display:inline-flex; align-items:center; gap:0.6rem; font-size:12px; color:var(--gold); text-decoration:none; letter-spacing:1px; font-family:'Jost',sans-serif; transition:opacity 0.2s; opacity:0.85;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.85'">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#c8992a" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="#c8992a" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="#c8992a"/></svg>
+              Follow my travels
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -707,9 +712,9 @@
   <div class="nl-popup-overlay" id="nlPopup">
     <div class="nl-popup">
       <button class="nl-popup-close" onclick="closeNlPopup()">&#x2715;</button>
-      <div class="nl-popup-label">Stay in the loop</div>
+      <div class="nl-popup-label">Wandr Newsletter</div>
       <div class="nl-popup-title">Travel ideas worth reading.</div>
-      <div class="nl-popup-sub">Destination guides, trip tips and Wandr updates — straight to your inbox.</div>
+      <div class="nl-popup-sub">Join the Wandr newsletter — destination guides, trip tips and honest travel advice, straight to your inbox.</div>
       <input class="nl-popup-input" id="nlPopupEmail" type="email" placeholder="your@email.com" />
       <button class="nl-popup-btn" onclick="popupSubscribe()">Subscribe</button>
       <div class="nl-popup-confirm" id="nlPopupConfirm">&#10003; You're in. We'll be in touch.</div>
