@@ -15,7 +15,7 @@ An AI-powered travel planning website with two paths: a free AI itinerary genera
 - **Custom domain:** wandrplan.com (GoDaddy, DNS managed via Cloudflare)
 - **Backend:** Cloudflare Worker (wandr-backend)
 - **AI:** Anthropic Claude Haiku 4.5 (claude-haiku-4-5-20251001), max_tokens: 3000
-- **Email:** Resend (domain: wandrplan.com, from: hello@wandrplan.com)
+- **Email:** Resend (domain: wandrplan.com, from: hello@wandrplan.com) — free plan, transactional only
 - **Form data:** Google Apps Script → Google Sheets ("Wandr Leads")
 - **Analytics:** Cloudflare Web Analytics (EU excluded)
 
@@ -31,7 +31,7 @@ An AI-powered travel planning website with two paths: a free AI itinerary genera
 5. Features (3 columns) — white cards with gold top border
 6. How it works (4 steps)
 7. CTA — full-bleed photo
-8. Footer — dark background
+8. Footer — dark background with newsletter strip + Instagram link
 9. Favicon: wandr_logo_new_notext.png
 
 ### planner.html — Questionnaire + itinerary
@@ -56,23 +56,29 @@ On Generate:
 - AI itinerary generated via Worker, markdown stripped
 - Itinerary shown as paywall-style blur overlay — email input embedded inside glimpse card
 - Send it button disabled until itinerary loads
+- If AI generation fails → friendly error message shown ("our AI stepped out for chai") instead of generic Day 1/Day 2 placeholder
 
 On Send it:
 - Full itinerary emailed via Worker
 - Second row written to Sheet 2 with email + recommended destination
 - Email title for undecided: "Your trip to a destination we recommend for you"
+- Newsletter popup shown 1.2s after success (email pre-filled) — only shown once per session
 
 Consultation section:
 - Divider: "Not sure yet? Talk to a travel expert!"
 - Badge changed from "Premium" to "First session free"
+- On consultation submit: Sheet + Worker fire in parallel (Promise.all) with 10s timeout; success shown regardless to avoid user-facing hangs
+- Newsletter popup shown 1.2s after consultation submit — only if not already shown this session
 
 ### why.html — Consultant page
 - Full-bleed hero photo
 - Consultant bio with Ankur's real photo (ankur.jpg), stat cards (25 countries, 5 continents)
-- Instagram link, destination tags by region
+- Instagram link (@ankurjbordoloi), destination tags by region
 - What a session covers (6 cards), who it's for (2 cards)
 - Comparison table, CTA photo section
 - Consultation booking form → Sheet 1
+- On submit: Sheet + Worker fire in parallel (Promise.all) with 10s timeout; success shown regardless
+- Newsletter popup shown 1.2s after submit (email pre-filled)
 - Favicon: wandr_logo_new_notext.png
 
 ---
@@ -95,6 +101,7 @@ Consultation section:
 - `POST /itinerary` — Anthropic API → returns itinerary + recommended_dest
 - `POST /email` — sends itinerary email via Resend
 - `POST /consultation` — sends consultation confirmation email + notification to ankur@wandrplan.com via Resend
+- `POST /subscribe` — logs newsletter subscriber to Sheet 3 (Email, Source, Subscribed At)
 
 Security: CORS (wandrplan.com only), origin validation, 20 req/hour/IP rate limit
 
@@ -157,15 +164,39 @@ Logo in emails: hosted at https://raw.githubusercontent.com/ankurjbordoloi/ankur
 
 ## Google Sheets — "Wandr Leads"
 
-- Sheet 1: Consultation leads (from planner.html and why.html)
-- Sheet 2: Planner responses (2 rows per user — Generate + Send it)
+- Sheet 1 (Consultation Leads): Consultation leads from planner.html and why.html
+- Sheet 2 (Planner Responses): 2 rows per user — Generate + Send it
+- Sheet 3 (Newsletter Subscribers): Email, Source, Subscribed At
 
 Form field values:
 - `'Planner Responses'` → Sheet 2
 - `'Planner - Consultation'` → Sheet 1
 - `'Why Page - Consultation'` → Sheet 1
+- `'Newsletter'` → Sheet 3
 
 Apps Script: secret token `wandr2026secure`, honeypot, 20/hour rate limit
+
+---
+
+## Newsletter
+
+- Footer subscribe strip on all 3 pages — email field → "You're in. We'll be in touch."
+- Newsletter popup on planner.html: fires after "Send it" and after consultation submit (email pre-filled, only once per session via `_nlPopupShown` flag)
+- Newsletter popup on why.html: fires after consultation submit (email pre-filled)
+- Popup label: "Wandr Newsletter" — copy makes newsletter explicit
+- Dismiss behaviour: just closes, can show again on next page visit (no localStorage)
+- Subscriber source tracked: `footer`, `popup-planner`, `popup-why`, `popup-index`
+- Sending tool: to be set up when first edition is ready (Mailchimp or Brevo free tier)
+- Existing planner users (Sheet 2 emails) to be added to list at newsletter launch with a one-time welcome note
+
+---
+
+## Footer — All Pages
+- Dark background (#1a1612)
+- Left: Wandr wordmark + "Curated travel"
+- Right: © year + "Built with intention." + Instagram link (@ankurjbordoloi) below
+- Instagram link: gold SVG icon + "Follow my travels", right-aligned below copyright
+- Newsletter strip below footer content (email input + Subscribe button)
 
 ---
 
@@ -194,6 +225,7 @@ Apps Script: secret token `wandr2026secure`, honeypot, 20/hour rate limit
 ## Conversion Tracking
 - Generate → Email: Sheet 2 Row 2 ÷ Row 1
 - Consultation source: Form field in Sheet 1
+- Newsletter source: Source field in Sheet 3
 
 ---
 
@@ -226,6 +258,8 @@ Apps Script: secret token `wandr2026secure`, honeypot, 20/hour rate limit
 - Ankur notification email live (fires on every consultation request)
 - 42+ submissions: 31% undecided, top dests: Italy, Japan, Malaysia, Maldives, Singapore, Spain, Switzerland, Thailand + domestic India
 - Ankur's real photo live on why.html
+- Newsletter subscriber capture live (footer + post-action popups on all pages)
+- Instagram link live in all footers
 
 ---
 
@@ -236,6 +270,8 @@ Apps Script: secret token `wandr2026secure`, honeypot, 20/hour rate limit
 - Sonnet 4.6 upgrade (web search for live flights) — deferred, Haiku performing well for MVP
 - Brand rename consideration (pravasa.com, Itinera, Rovana)
 - Broader LinkedIn launch
+- Instagram Reels launch content (concepts explored: personal storytelling, product demo, Starbucks mug collection)
+- First newsletter edition
 
 ---
 
