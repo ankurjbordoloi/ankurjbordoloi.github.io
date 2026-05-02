@@ -629,43 +629,41 @@
       const btn = document.querySelector('.form-btn');
       btn.textContent = 'Sending...';
       btn.disabled = true;
+
+      const timeout = (ms) => new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms));
+
       try {
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            'secret': 'wandr2026secure',
-            'Form': 'Why Page - Consultation',
-            'Name': name,
-            'Email': email,
-            'WhatsApp': wa,
-            'Preferred Time': time,
-            'Destination': dest,
-            'Notes': note
-          })
-        });
-        await fetch(`${WORKER_URL}/consultation`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          wa,
-          time,
-          dest,
-          note
-        })
-      });
-        document.getElementById('cConfirm').style.display = 'block';
-        btn.textContent = 'Request sent';
-        // Show newsletter popup after short delay, pre-filled with their email
-        setTimeout(() => showNlPopup(email), 1200);
-      } catch(err) {
-        btn.textContent = 'Request a consultation session';
-        btn.disabled = false;
-        alert('Something went wrong. Please try again.');
+        await Promise.race([
+          Promise.all([
+            fetch(SCRIPT_URL, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                'secret': 'wandr2026secure',
+                'Form': 'Why Page - Consultation',
+                'Name': name,
+                'Email': email,
+                'WhatsApp': wa,
+                'Preferred Time': time,
+                'Destination': dest,
+                'Notes': note
+              })
+            }),
+            fetch(`${WORKER_URL}/consultation`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name, email, wa, time, dest, note })
+            })
+          ]),
+          timeout(10000)
+        ]);
+      } catch(e) {
+        // If sheet logged or timeout — still show success to user
       }
+      document.getElementById('cConfirm').style.display = 'block';
+      btn.textContent = 'Request sent';
+      setTimeout(() => showNlPopup(email), 1200);
     }
 
     document.querySelectorAll('a[href="#consultant"]').forEach(link => {
