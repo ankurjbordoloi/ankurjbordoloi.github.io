@@ -62,23 +62,24 @@ On Send it:
 - Full itinerary emailed via Worker
 - Second row written to Sheet 2 with email + recommended destination
 - Email title for undecided: "Your trip to a destination we recommend for you"
-- Newsletter popup shown 1.2s after success (email pre-filled) — only shown once per session
+- Newsletter popup shown 1.2s after success (email pre-filled) — only shown once per session via `_nlPopupShown` flag
 
 Consultation section:
 - Divider: "Not sure yet? Talk to a travel expert!"
-- Badge changed from "Premium" to "First session free"
-- On consultation submit: Sheet + Worker fire in parallel (Promise.all) with 10s timeout; success shown regardless to avoid user-facing hangs
-- Newsletter popup shown 1.2s after consultation submit — only if not already shown this session
+- Badge: "First session free"
+- On consultation submit: Sheet + Worker fire in parallel (Promise.all) with 10s timeout; success shown regardless
+- Newsletter popup shown 1.2s after submit — only if not already shown this session
 
 ### why.html — Consultant page
 - Full-bleed hero photo
-- Consultant bio with Ankur's real photo (ankur.jpg), stat cards (25 countries, 5 continents)
+- Consultant bio with Ankur's real photo (ankur.jpg), stat cards (25 countries)
 - Instagram link (@ankurjbordoloi), destination tags by region
 - What a session covers (6 cards), who it's for (2 cards)
 - Comparison table, CTA photo section
 - Consultation booking form → Sheet 1
 - On submit: Sheet + Worker fire in parallel (Promise.all) with 10s timeout; success shown regardless
 - Newsletter popup shown 1.2s after submit (email pre-filled)
+- Consultant info body text: 12px (intentionally smaller than standard)
 - Favicon: wandr_logo_new_notext.png
 
 ---
@@ -99,13 +100,15 @@ Consultation section:
 ## Cloudflare Worker — Endpoints
 
 - `POST /itinerary` — Anthropic API → returns itinerary + recommended_dest
-- `POST /email` — sends itinerary email via Resend
-- `POST /consultation` — sends consultation confirmation email + notification to ankur@wandrplan.com via Resend
-- `POST /subscribe` — logs newsletter subscriber to Sheet 3 (Email, Source, Subscribed At)
+- `POST /email` — sends itinerary email via Resend (BCC: hello@wandrplan.com)
+- `POST /consultation` — sends consultation confirmation + notification to ankur@wandrplan.com (BCC: hello@wandrplan.com)
+- `POST /subscribe` — logs newsletter subscriber to Sheet 3
 
 Security: CORS (wandrplan.com only), origin validation, 20 req/hour/IP rate limit
 
 Secrets: `ANTHROPIC_API_KEY`, `RESEND_API_KEY`
+
+Constant at top of worker: `const BCC = 'hello@wandrplan.com'`
 
 ---
 
@@ -127,7 +130,7 @@ Formatting:
 - 1 month+: weekly groups
 - Max 800 words, no markdown, kid/senior friendly where applicable
 
-Budget: per person, local currency, simple list (food, transport, accommodation, activities + flight estimate with Skyscanner note)
+Budget: per person, local currency, simple list (food, transport, accommodation, activities + Skyscanner note for flights)
 
 Booking lead time:
 - <3 weeks: peak fares
@@ -139,13 +142,14 @@ Booking lead time:
 
 ## Emails — Unified Light Theme
 
-Both emails: #faf8f4 bg, compass logo image + WANDR wordmark + gold tagline (shared LOGO_BLOCK constant in Worker), #6b5f52 body text, #c8992a CTA button.
+All emails: #faf8f4 bg, compass logo image + WANDR wordmark + gold tagline (shared LOGO_BLOCK constant in Worker), #6b5f52 body text, #c8992a CTA button.
+BCC on all outgoing emails: hello@wandrplan.com
 
 Logo in emails: hosted at https://raw.githubusercontent.com/ankurjbordoloi/ankurjbordoloi.github.io/main/wandr_logo_new_notext.png
 
 ### Itinerary email
-- Subject: "Your [DEST] itinerary is ready" / "Your personalised itinerary is ready"
-- Title: "Your trip to [DEST]" / "Your trip to a destination we recommend for you"
+- Subject: "Your [Dest] itinerary is ready — Wandr" (normal case, not all-caps) / "Your personalised itinerary is ready — Wandr"
+- Title: "Your trip to [Dest]" / "Your trip to a destination we recommend for you"
 - CTA → why.html#consultant
 
 ### Consultation confirmation email
@@ -155,8 +159,8 @@ Logo in emails: hosted at https://raw.githubusercontent.com/ankurjbordoloi/ankur
 - CTA → why.html
 
 ### Ankur notification email (internal)
-- Fires instantly when consultation form is submitted (from planner.html or why.html)
-- Sent to: ankur@wandrplan.com
+- Fires on every consultation form submit (planner.html or why.html)
+- Sent to: ankur@wandrplan.com (no BCC)
 - Subject: "New consultation request — [Name]"
 - Contains: name, email (clickable), WhatsApp, preferred time, destination, note
 
@@ -164,7 +168,7 @@ Logo in emails: hosted at https://raw.githubusercontent.com/ankurjbordoloi/ankur
 
 ## Google Sheets — "Wandr Leads"
 
-- Sheet 1 (Consultation Leads): Consultation leads from planner.html and why.html
+- Sheet 1 (Consultation Leads): from planner.html and why.html
 - Sheet 2 (Planner Responses): 2 rows per user — Generate + Send it
 - Sheet 3 (Newsletter Subscribers): Email, Source, Subscribed At
 
@@ -183,27 +187,27 @@ Apps Script: secret token `wandr2026secure`, honeypot, 20/hour rate limit
 - Footer subscribe strip on all 3 pages — email field → "You're in. We'll be in touch."
 - Newsletter popup on planner.html: fires after "Send it" and after consultation submit (email pre-filled, only once per session via `_nlPopupShown` flag)
 - Newsletter popup on why.html: fires after consultation submit (email pre-filled)
-- Popup label: "Wandr Newsletter" — copy makes newsletter explicit
-- Dismiss behaviour: just closes, can show again on next page visit (no localStorage)
-- Subscriber source tracked: `footer`, `popup-planner`, `popup-why`, `popup-index`
-- Sending tool: to be set up when first edition is ready (Mailchimp or Brevo free tier)
-- Existing planner users (Sheet 2 emails) to be added to list at newsletter launch with a one-time welcome note
+- Popup copy: label "Wandr Newsletter", subtext explicitly mentions newsletter
+- Dismiss: just closes, shows again on next visit (no localStorage)
+- Source tracked: `footer`, `popup-planner`, `popup-why`, `popup-index`
+- Sending tool: Mailchimp or Brevo free tier — to set up when first edition is ready
+- Existing planner users (Sheet 2 emails) to be added at launch with a one-time welcome note
 
 ---
 
 ## Footer — All Pages
 - Dark background (#1a1612)
 - Left: Wandr wordmark + "Curated travel"
-- Right: © year + "Built with intention." + Instagram link (@ankurjbordoloi) below
-- Instagram link: gold SVG icon + "Follow my travels", right-aligned below copyright
-- Newsletter strip below footer content (email input + Subscribe button)
+- Right: © year + "Built with intention." + Instagram link directly below (same text block)
+- Instagram link: gold SVG icon + "Follow my travels" — right-aligned, below copyright
+- Newsletter strip below footer inner (email input + Subscribe button)
 
 ---
 
 ## Email Setup (Gmail)
 - hello@wandrplan.com → forwards to ankurjbordoloi@gmail.com via Cloudflare Email Routing
 - ankur@wandrplan.com → forwards to ankurjbordoloi@gmail.com via Cloudflare Email Routing
-- Both addresses set up as "Send mail as" in Gmail via Gmail SMTP + App Password
+- Both set up as "Send mail as" in Gmail via Gmail SMTP + App Password
 - Gmail filter: emails to hello@wandrplan.com → labelled "Wandr"
 
 ---
@@ -248,41 +252,50 @@ Apps Script: secret token `wandr2026secure`, honeypot, 20/hour rate limit
 ## Operational Documents
 - `wandr_discovery_call.docx` — call sheet, packages, red flags, closing script
 - `whatsapp_templates.md` — 6 templates: post-call, follow-up, confirm, payment, itinerary, on-trip
+- Itinerary Word doc template: Wandr-branded .docx with gold dividers, Georgia/Arial fonts, day labels in gold — generated per client
+
+---
+
+## Consultation Itinerary Work
+- Ankur uses Claude to draft itineraries for real clients, then refines with personal knowledge
+- Word docs generated in Wandr brand theme (WANDR header, gold dividers, bullet points with gold en-dash)
+- First real client itinerary: Assam & Meghalaya (Guwahati → Shillong → Cherrapunji), 4 days
 
 ---
 
 ## MVP Status
 - Live at wandrplan.com, closed group testing
-- LinkedIn soft-launch post drafted (cryptic, no URL yet) — not yet posted, finalising a few things first
-- Consultation confirmation email live
-- Ankur notification email live (fires on every consultation request)
+- LinkedIn soft-launch post drafted — not yet posted
 - 42+ submissions: 31% undecided, top dests: Italy, Japan, Malaysia, Maldives, Singapore, Spain, Switzerland, Thailand + domestic India
 - Ankur's real photo live on why.html
-- Newsletter subscriber capture live (footer + post-action popups on all pages)
+- Newsletter subscriber capture live (footer + post-action popups)
 - Instagram link live in all footers
+- BCC on all outgoing emails (hello@wandrplan.com) for deliverability monitoring
+- Email subject lines fixed — normal case + "— Wandr" suffix (was all-caps, caused silent drops by Gmail/Yahoo)
 
 ---
 
 ## Post-MVP Backlog
 - Own travel photos (replace Unsplash)
-- Logo swap consideration — wandr_logo_new_notext.png currently in use, paper plane logo (Wandr_Logo.png) retired
+- Logo swap consideration
 - Blog / travel stories
-- Sonnet 4.6 upgrade (web search for live flights) — deferred, Haiku performing well for MVP
+- Sonnet upgrade with web search for live flights — deferred
 - Brand rename consideration (pravasa.com, Itinera, Rovana)
-- Broader LinkedIn launch
-- Instagram Reels launch content (concepts explored: personal storytelling, product demo, Starbucks mug collection)
+- Broader LinkedIn + Instagram launch
+- Instagram Reels concepts: personal storytelling, product demo, Starbucks mug collection
 - First newsletter edition
 
 ---
 
-## Context
+## Context & Workflow
 - Built via Claude.ai, zero prior coding knowledge
-- GoDaddy domain, DNS on Cloudflare (bypasses GoDaddy "Coming Soon")
+- PROJECT.md uploaded to Claude Project for persistent context — update at end of each session
+- GoDaddy domain, DNS on Cloudflare
 - Resend domain verified, DKIM/SPF/DMARC set
 - Emails land in Promotions (acceptable for MVP)
 
 ---
 
 ## Session Prompt
-Paste this file in a new session with:
-> Hi Claude! I'm continuing work on Wandr. Here's the full project context. Please continue helping me build and improve it.
+This file is uploaded to the Claude Project. In new sessions just say:
+> Hi Claude! I'm continuing work on Wandr. Please read the project file for full context.
