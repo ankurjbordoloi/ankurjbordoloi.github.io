@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Journal — Wandr</title>
+  <meta name="description" content="Real travel guides, honest itineraries, and destination advice from someone who's actually been there. 25 countries and counting." />
+  <link rel="icon" href="../wandr_logo_new_notext.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf8f4;
+      --section: #f3ede4;
+      --gold: #c8992a;
+      --text: #1a1612;
+      --mid: #6b5f52;
+      --light: #a09485;
+      --white: #ffffff;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,248,244,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,153,42,0.15);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-brand img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+
+    .nav-brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .nav-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px;
+      font-weight: 400;
+      letter-spacing: 7px;
+      color: var(--text);
+      text-transform: uppercase;
+    }
+
+    .nav-tagline {
+      font-family: 'Jost', sans-serif;
+      font-size: 8px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .blog-hero {
+      background: var(--section);
+      padding: 80px 32px 64px;
+      text-align: center;
+      border-bottom: 1px solid rgba(200,153,42,0.15);
+    }
+
+    .blog-hero-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .blog-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .blog-hero p {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--mid);
+      letter-spacing: 0.3px;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* GRID */
+    .blog-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
+    }
+
+    .post-card {
+      background: var(--white);
+      border-top: 2px solid var(--gold);
+      box-shadow: 0 2px 16px rgba(26,22,18,0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(26,22,18,0.1);
+    }
+
+    .post-card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .post-card-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .post-tag {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(200,153,42,0.1);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+
+    .post-date {
+      font-size: 11px;
+      color: var(--light);
+      letter-spacing: 0.5px;
+    }
+
+    .post-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .post-card p {
+      font-size: 13px;
+      color: var(--mid);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .post-card-cta {
+      margin-top: 20px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      padding: 48px 32px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      letter-spacing: 5px;
+      color: var(--bg);
+      text-transform: uppercase;
+    }
+
+    .footer-tagline {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-top: 4px;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--light);
+      letter-spacing: 0.5px;
+    }
+
+    .footer-ig {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: flex-end;
+      margin-top: 6px;
+      text-decoration: none;
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-ig svg { width: 14px; height: 14px; fill: var(--gold); }
+
+    .footer-newsletter {
+      max-width: 1100px;
+      margin: 32px auto 0;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-newsletter input {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--bg);
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      padding: 10px 16px;
+      outline: none;
+    }
+
+    .footer-newsletter input::placeholder { color: var(--light); }
+
+    .footer-newsletter button {
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      cursor: pointer;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .post-card:nth-child(1) { animation-delay: 0.1s; }
+    .post-card:nth-child(2) { animation-delay: 0.2s; }
+    .post-card:nth-child(3) { animation-delay: 0.3s; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .blog-hero { padding: 56px 20px 48px; }
+      .blog-grid { padding: 40px 20px; gap: 24px; }
+      footer { padding: 40px 20px 24px; }
+      .footer-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-brand">
+      <img src="../wandr_logo_new_notext.png" alt="Wandr" />
+      <div class="nav-brand-text">
+        <span class="nav-wordmark">Wandr</span>
+        <span class="nav-tagline">Curated travel</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../why.html">Why Wandr</a></li>
+    </ul>
+  </nav>
+
+  <section class="blog-hero">
+    <p class="blog-hero-label">Travel Journal</p>
+    <h1>Places Worth Going.<br>Stories Worth Telling.</h1>
+    <p>Real guides from someone who's actually been there. No sponsored fluff, no filler itineraries.</p>
+  </section>
+
+  <div class="blog-grid">
+
+    <a href="japan-17-day-itinerary.html" class="post-card">
+      <img
+        class="post-card-img"
+        src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=700&q=80"
+        alt="Japan travel guide"
+        loading="lazy"
+      />
+      <div class="post-card-body">
+        <div class="post-card-meta">
+          <span class="post-tag">Japan</span>
+          <span class="post-date">June 2026</span>
+        </div>
+        <h2>17 Days in Japan: The Complete Itinerary</h2>
+        <p>Tokyo, Hakone, Osaka, Kyoto, Nara, Hiroshima — every city, every stop, and everything I'd do differently.</p>
+        <span class="post-card-cta">Read more →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Wandr</div>
+        <div class="footer-tagline">Curated travel</div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-copy">© 2026 · Built with intention.</div>
+        <a href="https://instagram.com/ankurjbordoloi" class="footer-ig" target="_blank">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Follow my travels
+        </a>
+      </div>
+    </div>
+    <div class="footer-newsletter">
+      <input type="email" placeholder="Your email address" />
+      <button>Subscribe</button>
+    </div>
+  </footer>
+
+</body>
+</html>
