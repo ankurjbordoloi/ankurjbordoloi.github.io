@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>17 Days in Japan: The Complete Itinerary — Wandr</title>
-  <meta name="description" content="Tokyo, Hakone, Osaka, Kyoto, Nara, Hiroshima — a complete 17-day Japan itinerary covering every city, what to do, where to eat, and everything I'd do differently." />
-  <meta property="og:title" content="17 Days in Japan: The Complete Itinerary — Wandr" />
-  <meta property="og:description" content="Every city, every stop. A real 17-day Japan itinerary from someone who's done it." />
+  <title>2 Weeks in Japan: The Complete Itinerary — Wandr</title>
+  <meta name="description" content="Tokyo, Hakone, Osaka, Kyoto, Nara, Hiroshima — a complete two-week Japan itinerary covering every city, what to do, where to eat, and everything I'd do differently." />
+  <meta property="og:title" content="2 Weeks in Japan: The Complete Itinerary — Wandr" />
+  <meta property="og:description" content="Every city, every stop. A real two-week Japan itinerary from someone who's done it." />
   <meta property="og:image" content="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1200&q=80" />
   <link rel="icon" href="../wandr_logo_new_notext.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -101,6 +101,58 @@
     }
 
     .nav-links a:hover { color: var(--gold); }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      transition: all 0.25s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0; right: 0;
+      background: rgba(250,248,244,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,153,42,0.15);
+      padding: 16px 24px 24px;
+      z-index: 150;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(200,153,42,0.1);
+      transition: color 0.2s;
+    }
+    .nav-mobile-menu a:last-child { border-bottom: none; }
+    .nav-mobile-menu a:hover { color: var(--gold); }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
 
     /* HERO */
     .post-hero {
@@ -280,8 +332,6 @@
       gap: 24px;
     }
 
-    .fact-item { }
-
     .fact-label {
       font-size: 9px;
       letter-spacing: 2px;
@@ -444,57 +494,6 @@
       footer { padding: 40px 20px 24px; }
       .footer-right { text-align: left; }
     }
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-    }
-    .nav-hamburger span {
-      display: block;
-      width: 22px;
-      height: 1.5px;
-      background: var(--text);
-      transition: all 0.25s ease;
-    }
-    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-    .nav-mobile-menu {
-      display: none;
-      position: fixed;
-      top: 64px;
-      left: 0; right: 0;
-      background: rgba(250,248,244,0.97);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(200,153,42,0.15);
-      padding: 16px 24px 24px;
-      z-index: 150;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .nav-mobile-menu.open { display: flex; }
-    .nav-mobile-menu a {
-      font-family: 'Jost', sans-serif;
-      font-size: 13px;
-      font-weight: 300;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--text-mid);
-      text-decoration: none;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(200,153,42,0.1);
-      transition: color 0.2s;
-    }
-    .nav-mobile-menu a:last-child { border-bottom: none; }
-    .nav-mobile-menu a:hover { color: var(--gold); }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-    }
   </style>
 </head>
 <body>
@@ -529,20 +528,20 @@
         <span class="post-tag">Japan</span>
         <span class="post-hero-date">June 2026 · 10 min read</span>
       </div>
-      <h1>17 Days in Japan:<br>The Complete Itinerary</h1>
+      <h1>2 Weeks in Japan:<br>The Complete Itinerary</h1>
     </div>
   </div>
 
   <div class="post-wrap">
 
     <p class="post-intro">
-      I went to Japan thinking I understood it from everything I'd read. I was wrong. Here's what 17 days actually looked like — every city, the honest take, and what I'd change.
+      I went to Japan thinking I understood it from everything I'd read. I was wrong. Here's what two weeks actually looked like — every city, the honest take, and what I'd change.
     </p>
 
     <div class="quick-facts">
       <div class="fact-item">
         <div class="fact-label">Duration</div>
-        <div class="fact-value">17 Days</div>
+        <div class="fact-value">2 Weeks</div>
       </div>
       <div class="fact-item">
         <div class="fact-label">Cities</div>
@@ -554,12 +553,12 @@
       </div>
       <div class="fact-item">
         <div class="fact-label">Base</div>
-        <div class="fact-value">Osaka</div>
+        <div class="fact-value">Tokyo</div>
       </div>
     </div>
 
     <div class="post-body">
-      <p>Japan rewards people who slow down. The temptation is to do everything — every shrine, every ramen shop, every viewing platform — and end up remembering none of it. Seventeen days sounds like a lot. It isn't. Here's how I'd structure it.</p>
+      <p>Japan rewards people who slow down. The temptation is to do everything — every shrine, every ramen shop, every viewing platform — and end up remembering none of it. Two weeks sounds like a lot. It isn't. Here's how I'd structure it.</p>
     </div>
 
     <!-- TOKYO -->
@@ -574,6 +573,10 @@
       <div class="tip-box">
         <strong>Practical note</strong>
         Get a Suica card at the airport. It works on every train, subway, and bus in Tokyo and most of Japan. Add money at any convenience store. This single decision will save you more time than anything else.
+      </div>
+      <div class="tip-box">
+        <strong>Where to stay in Tokyo</strong>
+        Cabs in Tokyo are expensive. Stay somewhere on or close to the JR Yamanote Line — the circular loop that connects every major neighbourhood. Ginza, near Tokyo Station, Shibuya, and Shinjuku are all good bases. From any of these you can get almost anywhere in the city without needing a taxi.
       </div>
     </div>
 
@@ -599,14 +602,18 @@
     <div class="city-section">
       <div class="city-label">Stop 03</div>
       <h2>Osaka</h2>
-      <div class="city-duration">3–4 days (use as base)</div>
-      <p>Osaka is where Japan stops being polite about food and starts being honest. The city has a reputation and it's earned. Use it as your base for the rest of the Kansai region — train access to Kyoto, Nara, and Hiroshima is fast and cheap.</p>
+      <div class="city-duration">3–4 days (Kansai base)</div>
+      <p>Osaka is where Japan stops being polite about food and starts being honest. The city has a reputation and it's earned. Use it as your base for the Kansai region — train access to Kyoto, Nara, and Hiroshima is fast and cheap.</p>
       <p><strong>Osaka Castle</strong> is worth the early morning visit. Go before 9am and you'll have the grounds largely to yourself. By 10am it belongs to the tour buses.</p>
       <p>Dotonbori in the evening is exactly the sensory overload it looks like in photos. Walk through it, eat something, then find a side street. The best bars and food in Osaka are not on the main strip.</p>
       <p>Kuromon Market gets recommended everywhere as a food market. It's become a tourist market. Skip buying food there and walk the perimeter instead — the surrounding streets have the real version of what Kuromon used to be.</p>
       <p>For cocktails, <strong>Hedonist in Osaka</strong> is genuinely excellent. Not a tourist bar. Worth booking ahead or going early.</p>
       <div class="tip-box">
-        <strong>Where to stay</strong>
+        <strong>Where to stay in Osaka</strong>
+        Stay in the city centre or Umeda, both of which keep you close to the main train stations. Osaka's subway is excellent but cabs add up fast, so being a short walk from a station matters more than you'd expect.
+      </div>
+      <div class="tip-box">
+        <strong>Note on Kyoto</strong>
         Stay in Osaka, not Kyoto. The Shinkansen between them takes 15 minutes and Osaka hotels are significantly cheaper. You'll come out ahead even accounting for the train costs.
       </div>
     </div>
@@ -632,7 +639,7 @@
       <h2>Nara</h2>
       <div class="city-duration">Half day</div>
       <p>Nara has free-roaming deer who will walk up to you, nudge your bag, and wait to be fed. It is completely surreal and then quickly completely normal, which is the strangest part. Half a day is the right amount of time — deer park, Todai-ji temple (largest wooden building in the world), done.</p>
-      <p>Nara is easy from both Kyoto and Osaka. An hour by local train. There's no reason to stay overnight.</p>
+      <p>Nara is easy from both Kyoto and Osaka. About an hour by local train. There's no reason to stay overnight.</p>
     </div>
 
     <hr class="city-divider" />
@@ -681,20 +688,17 @@
   </footer>
 
   <script>
-    // Scroll-triggered reveal for city sections
     const sections = document.querySelectorAll('.city-section');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     sections.forEach(s => observer.observe(s));
-  </script>
 
-  <script>
     function toggleMenu() {
       document.getElementById('navHamburger').classList.toggle('open');
       document.getElementById('navMobileMenu').classList.toggle('open');
     }
   </script>
-  
+
 </body>
 </html>
