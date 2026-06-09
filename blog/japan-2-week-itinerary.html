@@ -444,6 +444,57 @@
       footer { padding: 40px 20px 24px; }
       .footer-right { text-align: left; }
     }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      transition: all 0.25s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0; right: 0;
+      background: rgba(250,248,244,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,153,42,0.15);
+      padding: 16px 24px 24px;
+      z-index: 150;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(200,153,42,0.1);
+      transition: color 0.2s;
+    }
+    .nav-mobile-menu a:last-child { border-bottom: none; }
+    .nav-mobile-menu a:hover { color: var(--gold); }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
   </style>
 </head>
 <body>
@@ -460,7 +511,16 @@
       <li><a href="index.html">Journal</a></li>
       <li><a href="../why.html">Why Wandr</a></li>
     </ul>
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="nav-mobile-menu" id="navMobileMenu">
+    <a href="../index.html">Home</a>
+    <a href="index.html">Journal</a>
+    <a href="../why.html">Why Wandr</a>
+  </div>
 
   <div class="post-hero">
     <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1400&q=80" alt="Japan travel" />
@@ -629,5 +689,12 @@
     sections.forEach(s => observer.observe(s));
   </script>
 
+  <script>
+    function toggleMenu() {
+      document.getElementById('navHamburger').classList.toggle('open');
+      document.getElementById('navMobileMenu').classList.toggle('open');
+    }
+  </script>
+  
 </body>
 </html>
