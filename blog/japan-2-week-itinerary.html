@@ -41,27 +41,18 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(200,153,42,0.15);
-      padding: 0 32px;
-      height: 64px;
+      padding: 1.25rem 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .nav-brand {
+    .nav-logo {
+      text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 10px;
-      text-decoration: none;
+      gap: 12px;
     }
-
-    .nav-brand img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-    }
-
-    .nav-brand-text { display: flex; flex-direction: column; line-height: 1; }
 
     .nav-wordmark {
       font-family: 'Cormorant Garamond', serif;
@@ -328,7 +319,7 @@
       padding: 32px;
       margin: 56px 0;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 24px;
     }
 
@@ -486,7 +477,7 @@
     }
 
     @media (max-width: 600px) {
-      nav { padding: 0 20px; }
+      nav { padding: 1rem 1.25rem; }
       .post-hero-overlay { padding: 28px 20px; }
       .post-wrap { padding: 40px 20px; }
       .post-cta { padding: 40px 20px; }
@@ -499,14 +490,15 @@
 <body>
 
   <nav>
-    <a href="../index.html" class="nav-brand">
-      <img src="../wandr_logo_new_notext.png" alt="Wandr" />
-      <div class="nav-brand-text">
-        <span class="nav-wordmark">Wandr</span>
-        <span class="nav-tagline">Curated travel</span>
+    <a href="../index.html" class="nav-logo">
+      <img src="../wandr_logo_new_notext.png" alt="Wandr" style="height:40px; width:auto;" />
+      <div>
+        <div class="nav-wordmark">Wandr</div>
+        <div class="nav-tagline">Curated travel</div>
       </div>
     </a>
     <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
       <li><a href="index.html">Journal</a></li>
       <li><a href="../why.html">Why Wandr</a></li>
     </ul>
