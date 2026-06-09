@@ -1,67 +1,3 @@
-
-Wandr
-A full-stack AI-powered travel planning platform combining an itinerary generator with a personal consultation service; independently developed from zero coding knowledge using Claude AI and GitHub.
-Show more
-
-
-
-How can I help you today?
-
-
-Wandr blog
-Last message 10 minutes ago
-Instagram reel ideas
-Last message 21 minutes ago
-Creating a city guide reel for Wandr
-Last message 3 days ago
-Post-Instagram launch ideas
-Last message May 28
-Wandr - Launch and Later Fixes
-Last message May 20
-Wandr - Instagram and Business Model
-Last message May 20
-Wandr - Project Development
-Last message May 20
-Wandr - Basics and Closed Testing
-Last message May 20
-Wandr - First Look
-Last message May 20
-Memory
-Only you
-Purpose & context Ankur (Dubai-based, @ankurjbordoloi) is the founder and sole builder of Wandr (wandrplan.com), an AI-powered travel planning product with two offerings: a free AI itinerary generator and a paid personal consultation service. He has 25 countries of travel experience since 2017, with a Türkiye solo trip forming the brand origin story. The broader goal is to build a travel audience from scratch and convert it into consultation leads via an interconnected content-newsletter-SEO flywheel. Ankur has no coding background — the entire product has been built through Claude. He holds a Dubai Golden Visa and targets solo travellers primarily, with couples and families as secondary audiences. Current state Product: Live at wandrplan.com on GitHub Pages. Core stack: Cloudflare Workers, Anthropic Claude Haiku, Resend (transactional email), Google Sheets via Apps Script. Newsletter infrastructure uses Brevo (chosen over Resend for broadcast sending). Email subject lines, deliverability, and BCC routing have been resolved. Blog/SEO: Blog being built at wandrplan.com/blog/ as the primary SEO vehicle. A 17-day Japan itinerary post and blog index page have been created in HTML matching Wandr branding. Ankur is editing content personally before finalising. Instagram: Account (@ankurjbordoloi) converted from personal to public travel consultant profile. Posting cadence is Wednesdays and Saturdays at 5pm UAE time using Edits by Instagram. Follower base (~614) is currently personal connections, not a travel audience — algorithm distribution to non-followers is working well across reels. Consultation: First real client consultation completed (Assam/Meghalaya itinerary), delivered as a branded Word document. Pricing tiers established (discovery call free, then tiered packages). Upcoming Dubai shoots: Two reels planned for a single afternoon — Al Seef at 4pm and Deira Perfume Souk at 7pm. Scripts and hooks finalised. On the horizon Ankur to send updated Japan blog HTML for Claude to incorporate his edits Al Seef and Deira Perfume Souk reels to be shot and posted Newsletter launch (Brevo); existing planner users to be added at launch; quarterly cadence planned Substack revisit in ~6 months once audience is larger Legal entity decision still pending (UAE Freelancer Permit vs Estonia OÜ vs Wyoming LLC) Profile optimisation: pin top 3 reels, add Story Highlights (priority conversion fixes identified) Morioka reel follow-up content (Morioka deliberately excluded from Japan blog post to preserve as Instagram payoff) Key learnings & principles Reels over carousels for growth: Carousels reach ~0% non-followers on small accounts; reels consistently reach 55–90%+ non-followers. Reels are the growth format; carousels serve engaged existing followers only. Shares are the primary algorithmic trigger: The Morioka/Grand Seiko reel's strong share count drove aggressive Reels tab distribution and became the best-performing post. Shares > saves > likes for algorithmic push. Niche-specific content outperforms broad destination content: Passionate communities (watch enthusiasts, fragrance collectors) share aggressively within their networks, driving outsized reach relative to follower count. One content piece, multiple surfaces: Blog post → newsletter → Instagram is the production model. Each piece of content should serve all three channels. Caption discipline: Captions must not repeat what's already in the video. Short, personal voice. Soft CTAs (emoji drops, save prompts, question-based engagement) outperform hard sells to cold audiences. Venue tags belong in the caption naturally, not in hashtags. Hook quality is the primary skip-rate driver: Opening frames that don't immediately signal value cause 48–60% skip rates. Hooks need to lead with a specific, surprising, or personal angle — not generic formats like "Nobody warns you about..." Em dashes read as AI-generated: Ankur has flagged em dashes as a style tell to avoid in all written content. Honesty over guesswork: Ankur explicitly prefers "I don't know" over unverified suggestions, particularly about app/platform features. Guessing about tools he'll use in production is not acceptable. Copyright caution on Meta: Designer brand bottles (Chanel, Dior, Prada) avoided on screen due to copyright strike risk. Niche fragrance houses (Creed, Amouage, MFK, Roja, Francesca Bianchi) are safe and resonate better with the target audience anyway. Approach & patterns Communication style: Direct, no-fluff. Final decisions should be respected without re-questioning. Responses should be as concise as the task allows. Code delivery: Complete, ready-to-deploy files preferred over piecemeal snippets, especially for structural changes. Iteration pattern: Ankur frequently pastes current code/content, requests targeted changes, and makes his own edits between messages. He refines Claude's drafts rather than accepting them wholesale — his edits consistently produce stronger final versions. Context continuity: Project files (PROJECT.md, WANDRLAUNCH.md, WANDRTECHNICAL.md) are maintained and uploaded to new chats to preserve context across sessions. Batch-updating these files at the end of productive sessions is the established workflow. Content voice: Middle ground between long-form SEO and personal editorial. Ankur does not want to be told exactly what to post — schedule frameworks are welcome, prescriptive content direction is not. He is not yet comfortable with talking-to-camera but is open to voiceover. Profile archiving: Ankur has declined to archive older personal posts — they support the 25-countries travel expert narrative. Pinning and Highlights are the conversion solution instead. Tools & resources Hosting & infrastructure: GitHub Pages, Cloudflare Workers, Cloudflare Web Analytics (EU excluded), GoDaddy domain AI: Anthropic Claude Haiku (itinerary generation), Claude (build partner) Email: Resend (transactional), Brevo (newsletter broadcast) Data: Google Sheets via Apps Script (consultation leads + planner responses + newsletter subscribers) Content editing: Edits by Instagram Design: Python PIL (carousel compositing), HTML/CSS for blog and email templates; Wandr brand = Cormorant Garamond + Jost, cream/gold palette (#faf8f4 background, #c8992a gold) Fonts: Cormorant Garamond (bold, regular, italic), Jost (light, medium) — TTF versions stored at /home/claude/fonts_ttf/ Fragrance stores referenced: Ashraf Shafi and French Fragrance (Deira)
-
-Last updated 2 days ago
-
-Instructions
-Read all project files for context. Keep answers short and to the point. Before undertaking complex tasks, ask relevant questions, if required. In case a particular chat goes on too long, remind me that the chat is taking up too much usage and it would make sense to move to a new chat. Offer to update Project.md file to move to a new chat without losing context. Regarding any code, ask for the latest version of the file in case you are not sure if you have the latest version in memory. Do not give answers and suggestions on any troubleshooting if you are not sure - rather ask questions to pinpoint the correct bug or problem before suggesting fixes. Never do guesswork or beat around the bush, if you don't know anything, say so and ask questions that might help you give a more informed answer. If you're still not sure after 2-3 questions, say so and ask the user to look elsewhere. Do not give any made up solution based on your guesswork. For any website related changes or queries, read all html codes in the github repo, read the existing files thoroughly without fail (ask for the files if you do not have the latest versions). Do not take any shortcuts or guesses, ensure you give the best and most efficient code without any mistakes. Recheck the files across the pages to ensure all formats, styles and fonts match for visual consistency on the website (this is a non-negotiable, I repeat, it is non-negotiable).
-
-Files
-1% of project capacity used
-
-WANDR_LAUNCH.md
-298 lines
-
-md
-
-
-
-WANDR_TECHNICAL.md
-316 lines
-
-md
-
-
-
-PROJECT.md
-349 lines
-
-md
-
-
-PROJECT.md
-
-
-raw
 # Wandr — AI Travel Planner
  
 ## What it is
@@ -375,4 +311,3 @@ This file is uploaded to the Claude Project. In new sessions just say:
  
 For Instagram/marketing sessions:
 > Hi Claude! I'm continuing work on Wandr marketing and Instagram. Please read WANDR_LAUNCH.md for full context. I'm currently working on [describe what you're doing].
- 
