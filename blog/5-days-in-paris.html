@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5 Days in Paris: The Complete Itinerary | Wandr</title>
+  <meta name="description" content="Notre Dame, Versailles, the Louvre, Montmartre. A complete five-day Paris itinerary covering every day, what to skip, and what actually earns its reputation." />
+  <meta property="og:title" content="5 Days in Paris: The Complete Itinerary | Wandr" />
+  <meta property="og:description" content="Five days, done right. A real Paris itinerary from someone who's done it." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1502602898db-104f9c7a?w=1200&q=80" />
+  <link rel="icon" href="../wandr_logo_new_notext.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf8f4;
+      --section: #f3ede4;
+      --gold: #c8992a;
+      --text: #1a1612;
+      --mid: #6b5f52;
+      --text-mid: #6b5f52;
+      --light: #a09485;
+      --white: #ffffff;
+      --shadow:    0 2px 24px rgba(26,22,18,0.07);
+      --shadow-lg: 0 8px 48px rgba(26,22,18,0.12);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 2.5rem;
+      background: rgba(250,248,244,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: var(--shadow); }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; gap: 12px; }
+    .nav-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 400; color: var(--text); letter-spacing: 7px; text-transform: uppercase; line-height: 1; }
+    .nav-tagline { font-size: 8px; letter-spacing: 3.5px; text-transform: uppercase; color: var(--gold); font-family: 'Jost', sans-serif; font-weight: 300; margin-top: 3px; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-mid); transition: color 0.2s; font-weight: 400; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      transition: all 0.25s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav-mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0; right: 0;
+      background: rgba(250,248,244,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200,153,42,0.15);
+      padding: 16px 24px 24px;
+      z-index: 150;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(200,153,42,0.1);
+      transition: color 0.2s;
+    }
+    .nav-mobile-menu a:last-child { border-bottom: none; }
+    .nav-mobile-menu a:hover { color: var(--gold); }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+    }
+
+    /* HERO */
+    .post-hero {
+      position: relative;
+      height: clamp(320px, 50vw, 520px);
+      overflow: hidden;
+      margin-top: 72px;
+    }
+
+    .post-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.05);
+      animation: heroZoom 8s ease forwards;
+    }
+
+    .post-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(26,22,18,0.2) 0%, rgba(26,22,18,0.65) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 48px;
+    }
+
+    .post-hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .post-tag {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(200,153,42,0.2);
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+
+    .post-hero-date {
+      font-size: 11px;
+      color: rgba(250,248,244,0.6);
+      letter-spacing: 0.5px;
+    }
+
+    .post-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 400;
+      color: var(--bg);
+      line-height: 1.15;
+      max-width: 700px;
+    }
+
+    /* CONTENT */
+    .post-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 32px;
+    }
+
+    .post-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--mid);
+      line-height: 1.6;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(200,153,42,0.2);
+    }
+
+    .post-body p {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--mid);
+      margin-bottom: 24px;
+    }
+
+    .post-body strong {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    /* City sections */
+    .city-section {
+      margin: 56px 0;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .city-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .city-label {
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .city-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .city-duration {
+      font-size: 12px;
+      color: var(--light);
+      letter-spacing: 0.5px;
+      margin-bottom: 24px;
+    }
+
+    .city-section p {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--mid);
+      margin-bottom: 20px;
+    }
+
+    .city-section p strong {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .tip-box {
+      background: var(--section);
+      border-left: 3px solid var(--gold);
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 13px;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    .tip-box strong {
+      color: var(--text);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .city-divider {
+      border: none;
+      border-top: 1px solid rgba(200,153,42,0.2);
+      margin: 0;
+    }
+
+    /* Quick facts */
+    .quick-facts {
+      background: var(--white);
+      border-top: 2px solid var(--gold);
+      box-shadow: 0 2px 16px rgba(26,22,18,0.06);
+      padding: 32px;
+      margin: 56px 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .fact-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: 6px;
+    }
+
+    .fact-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    /* CTA */
+    .post-cta {
+      background: var(--section);
+      border-top: 2px solid var(--gold);
+      padding: 48px 32px;
+      text-align: center;
+      margin-top: 64px;
+    }
+
+    .post-cta-label {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .post-cta h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .post-cta p {
+      font-size: 14px;
+      color: var(--mid);
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    .btn-gold {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-gold:hover { opacity: 0.88; }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      padding: 48px 32px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      letter-spacing: 5px;
+      color: var(--bg);
+      text-transform: uppercase;
+    }
+
+    .footer-tagline { font-size: 10px; letter-spacing: 2px; color: var(--gold); margin-top: 4px; }
+
+    .footer-right { text-align: right; }
+
+    .footer-copy { font-size: 11px; color: var(--light); letter-spacing: 0.5px; }
+
+    .footer-ig {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: flex-end;
+      margin-top: 6px;
+      text-decoration: none;
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-ig svg { width: 14px; height: 14px; fill: var(--gold); }
+
+    .footer-newsletter {
+      max-width: 1100px;
+      margin: 32px auto 0;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-newsletter input {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--bg);
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      padding: 10px 16px;
+      outline: none;
+    }
+
+    .footer-newsletter input::placeholder { color: var(--light); }
+
+    .footer-newsletter button {
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      cursor: pointer;
+    }
+
+    @keyframes heroZoom {
+      to { transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .post-hero-overlay { padding: 28px 20px; }
+      .post-wrap { padding: 40px 20px; }
+      .post-cta { padding: 40px 20px; }
+      .quick-facts { padding: 24px 20px; }
+      footer { padding: 40px 20px 24px; }
+      .footer-right { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="mainNav">
+    <a href="../index.html" class="nav-logo">
+      <img src="../wandr_logo_new_notext.png" alt="Wandr" style="height:40px; width:auto;" />
+      <div>
+        <div class="nav-wordmark">Wandr</div>
+        <div class="nav-tagline">Curated travel</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="index.html">Journal</a></li>
+      <li><a href="../why.html">Why Wandr</a></li>
+    </ul>
+    <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile-menu" id="navMobileMenu">
+    <a href="../index.html">Home</a>
+    <a href="index.html">Journal</a>
+    <a href="../why.html">Why Wandr</a>
+  </div>
+
+  <div class="post-hero">
+    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1400&q=80" alt="Paris travel" />
+    <div class="post-hero-overlay">
+      <div class="post-hero-meta">
+        <span class="post-tag">Paris</span>
+        <span class="post-hero-date">July 2026 · 9 min read</span>
+      </div>
+      <h1>5 Days in Paris:<br>The Complete Itinerary</h1>
+    </div>
+  </div>
+
+  <div class="post-wrap">
+
+    <p class="post-intro">
+      Paris isn't a city for couples. It's a city for romantics. There's a difference, and five days was enough to understand it. Here's exactly how I'd spend them again.
+    </p>
+
+    <div class="quick-facts">
+      <div class="fact-item">
+        <div class="fact-label">Duration</div>
+        <div class="fact-value">5 Days</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Pace</div>
+        <div class="fact-value">One Big Thing / Day</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Book Ahead</div>
+        <div class="fact-value">Versailles</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-label">Best For</div>
+        <div class="fact-value">Romantics</div>
+      </div>
+    </div>
+
+    <div class="post-body">
+      <p>Everyone arrives in Paris with an opinion already formed. Overrated, or the most beautiful city in the world, rarely anything in between. I landed somewhere unexpected: Paris earns almost everything it's known for, but it earns it slowly, and only if you stop trying to see all of it. Five days, one major anchor per day, nothing rushed. Here's how I'd structure it again.</p>
+    </div>
+
+    <!-- DAY 1 -->
+    <div class="city-section">
+      <div class="city-label">Day 01</div>
+      <h2>Notre Dame &amp; the Left Bank</h2>
+      <div class="city-duration">Île de la Cité &middot; Panthéon &middot; Luxembourg Gardens</div>
+      <p>Start at Notre Dame. Whatever you've seen in photos or news coverage of the fire, standing in front of it doesn't quite prepare you for it either. It's been through fire and it's still standing, and there's something about seeing that in person that a screen can't translate. Give it twenty minutes, walk the perimeter, and don't rush this one.</p>
+      <p>From there, walk to the <strong>Panthéon</strong>. It gets a fraction of the visitors Notre Dame does, which is exactly why it's my favourite building in the city. The dome, the crypt, the sheer scale of the interior, it's a mausoleum for some of the most important figures in French history and it feels like it. Most people skip it entirely. Don't.</p>
+      <p>Spend the afternoon in the <strong>Luxembourg Gardens</strong>. This isn't a sight to check off, it's a place to sit. Buy something from a nearby boulangerie, find a green chair near the fountain, and do nothing for an hour. Parisians treat their parks as a daily ritual, not a tourist stop, and this is the one afternoon on the trip built around doing the same.</p>
+      <div class="tip-box">
+        <strong>Practical note</strong>
+        The Panthéon, Notre Dame area, and Luxembourg Gardens are all walkable from each other in the 5th and 6th arrondissements. You won't need the Metro for most of Day 1.
+      </div>
+    </div>
+
+    <hr class="city-divider" />
+
+    <!-- DAY 2 -->
+    <div class="city-section">
+      <div class="city-label">Day 02</div>
+      <h2>Versailles</h2>
+      <div class="city-duration">Full day trip from Paris</div>
+      <p>Versailles is a full day, not a half day, and treating it as anything less is the most common mistake I saw other visitors make. <strong>Book your ticket online before you go.</strong> The palace ticket queue without a pre-booked slot can eat two hours of your morning before you've seen a single room.</p>
+      <p>Arrive as early as the gates allow. The Hall of Mirrors is extraordinary, but it's also the one room every tour group beelines for, so getting ahead of the crowds matters more here than almost anywhere else in Paris.</p>
+      <p>Here's the part most guides underweight: the <strong>gardens are not a postscript to the palace, they're the other half of the experience.</strong> The scale of them only registers once you're actually walking through the grounds, past the fountains and the Grand Canal, and realising the palace itself is almost a smaller story than the landscape built around it. Rent a bike if your legs are tired by the afternoon, the grounds are genuinely too large to cover entirely on foot in a day.</p>
+      <div class="tip-box">
+        <strong>Practical note</strong>
+        RER C from central Paris gets you to Versailles in about 40 minutes. Buy a round-trip ticket at the station and go early, ideally on a weekday.
+      </div>
+    </div>
+
+    <hr class="city-divider" />
+
+    <!-- DAY 3 -->
+    <div class="city-section">
+      <div class="city-label">Day 03</div>
+      <h2>Champs-Élysées &amp; the Eiffel Tower</h2>
+      <div class="city-duration">Arc de Triomphe &middot; Trocadéro &middot; Eiffel Tower</div>
+      <p>Start at the <strong>Arc de Triomphe</strong> in the morning, before the crowds build. Climb to the top if you have the legs for it. The view down the full length of the Champs-Élysées, with the Arc behind you and the avenue stretching out ahead, is worth the stairs.</p>
+      <p>Then walk the entire <strong>Champs-Élysées</strong>, start to finish. It's touristy, it's commercial, and it's still worth doing once, purely to understand why it's the avenue every other grand boulevard in the world is trying to be.</p>
+      <p>Save the <strong>Eiffel Tower</strong> for the evening, and here's the actual insight: don't go straight to the tower itself first. <strong>Go to Trocadéro.</strong> The view of the tower from across the river, especially as the light starts to fade, is the best angle in the city, better than anything you get standing directly underneath it. Watch it from there, then cross over and walk beneath it once it's lit.</p>
+      <div class="tip-box">
+        <strong>Timing tip</strong>
+        The Eiffel Tower does a five-minute sparkling light show on the hour after dark. Time your Trocadéro visit around sunset so you catch both the dusk view and the first sparkle show from across the river.
+      </div>
+    </div>
+
+    <hr class="city-divider" />
+
+    <!-- DAY 4 -->
+    <div class="city-section">
+      <div class="city-label">Day 04</div>
+      <h2>The Louvre &amp; Galeries Lafayette</h2>
+      <div class="city-duration">Full morning &middot; Afternoon shopping</div>
+      <p>The Louvre is not a museum, it's a city inside a building, and treating it like a checklist (find the Mona Lisa, leave) wastes almost everything it actually offers. Give it a full morning. Pick two or three wings you actually care about rather than attempting the whole thing, you will not see all of it in a day and trying to is how people end up exhausted and unable to remember any of it clearly.</p>
+      <p>In the afternoon, head to <strong>Galeries Lafayette</strong>. I'll be honest, I didn't expect a department store to make this list, but the building itself is the reason. The stained-glass dome inside is one of the most photographed ceilings in Paris for a reason, and it's free to walk in and look up. <strong>Don't miss the rooftop terrace</strong> either, it's free, it's rarely crowded, and it gives you a wide, unobstructed view across the Paris rooftops that most people never see because they assume it's shopping-only.</p>
+      <div class="tip-box">
+        <strong>Practical note</strong>
+        Louvre tickets should be booked online in advance for a timed entry slot. Tuesday closures apply, so check before building your day around it.
+      </div>
+    </div>
+
+    <hr class="city-divider" />
+
+    <!-- DAY 5 -->
+    <div class="city-section">
+      <div class="city-label">Day 05</div>
+      <h2>Montmartre &amp; the Seine</h2>
+      <div class="city-duration">Final day &middot; Optional: PSG stadium</div>
+      <p><strong>Montmartre</strong> is the right note to end the trip on. The city looks stunning from up there, and the neighbourhood itself, the steep streets, the artists in the square near Sacré-Cœur, the general sense of being somewhere slightly separate from the rest of Paris, earns its reputation as the most romanticised corner of the city.</p>
+      <p>Spend the rest of the day slower than the others. Try the local cuisine somewhere unremarkable-looking rather than the restaurant with the longest queue, walk along the <strong>Seine</strong> without a destination in mind, and if you have any energy left and happen to follow football, the <strong>PSG stadium</strong> is worth a visit for the museum and grounds tour.</p>
+      <p>Five days. Not enough. Never enough. But it's enough to understand the difference between visiting Paris and actually seeing it.</p>
+    </div>
+
+  </div>
+
+  <div class="post-cta">
+    <p class="post-cta-label">Planning Paris?</p>
+    <h3>Let's build your itinerary.</h3>
+    <p>Got questions about timing, budget, or what to actually prioritise? First session is free.</p>
+    <a href="../why.html" class="btn-gold">Talk to a travel expert</a>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">Wandr</div>
+        <div class="footer-tagline">Curated travel</div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-copy">© 2026 · Built with intention.</div>
+        <a href="https://instagram.com/ankurjbordoloi" class="footer-ig" target="_blank">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Follow my travels
+        </a>
+      </div>
+    </div>
+    <div class="footer-newsletter">
+      <input type="email" placeholder="Your email address" />
+      <button>Subscribe</button>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+    const sections = document.querySelectorAll('.city-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    sections.forEach(s => observer.observe(s));
+
+    function toggleMenu() {
+      document.getElementById('navHamburger').classList.toggle('open');
+      document.getElementById('navMobileMenu').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
